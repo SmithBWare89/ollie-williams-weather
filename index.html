@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Personal CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Ollie Williams Weather</title>
+</head>
+<body>
+    <div class="row min-vh-100 no-gutters">
+        <header class="col-12 col-lg-3 d-flex flex-column p-4 p-lg-3">
+            <label for="city-input">Search for a City:</label>
+            <input type="text" id="city-input">
+
+            <div class="card">
+                <h3 class="card-header">Recent Cities</h3>
+                <ul class="list-group">
+                    <button class="list-group-item">Miami</button>
+                </ul>
+            </div>
+        </header>
+
+        <main class="col-12 col-lg-3 d-flex flex-column p-4 p-lg-3">
+            <section class="card">
+                <h1>Atlanta</h1>
+                <p>Temperature</p>
+                <p>Humidity</p>
+                <p>Wind Speed</p>
+                <p>UV Index</p>
+            </section>
+            
+            <section>
+                <h1>5 Day Forecast</h1>
+                <div class="row">
+                    <div class="card">Monday</div>
+                    <div class="card">Tuesday</div>
+                    <div class="card">Wednesday</div>
+                    <div class="card">Thursday</div>
+                    <div class="card">Friday</div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
