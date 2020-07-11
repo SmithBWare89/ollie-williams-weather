@@ -45,24 +45,24 @@ async function getWeatherInfo(city){
             forecastGenerator(formattedResponse);
         }
     } catch (err) {
-       cityInputEl.classList.toggle("border-danger");
+       return errorInput();
     } 
 }
 
+// Submit from input received
 function inputSubmitHandler(event){
     // prevent submit from refreshing page
     event.preventDefault();
 
+    // If there are cities that have been searched
     if(citySearchedEl.innerHTML) {
+        // fade out the current weather container
         currentWeatherContainer.setAttribute("data-aos", "fade-out");
+        // hide it with opacity 0
         currentWeatherContainer.classList.add("before-click");
     }
 
-    if (cityInputEl.classList.contains("border-danger")) {
-        cityInputEl.classList.toggle("border-danger");
-    }
-
-    // values only allowable in form submission
+    // define values allowed in form submission
     let regex = /[^a-zA-Z ]/g;
 
     // get value from input
@@ -73,15 +73,8 @@ function inputSubmitHandler(event){
         getWeatherInfo(city);
         return cityInputEl.value = "";
     } else {
-        cityInputEl.classList.toggle("border-danger");
+        return errorInput();
     }
-}
-
-function populateData(city) {
-    citySearchedEl.textContent(city.name);
-    cityTemperatureEl.textContent(city.temp);
-    cityHumidityEl.textContent(city[0].main.humidity);
-    cityWindSpeedEl.textContent(city[0].wind.speed);
 }
 
 function currentDayGenerator(current, name){
@@ -122,7 +115,7 @@ function forecastGenerator(forecast) {
         // create the div
         const forecastCard = document.createElement("div");
         forecastCard.setAttribute("data-aos", "fade-in");
-        forecastCard.classList = "card border border-dark m-1 p-3 cold-day col-5 col-md-4 col-lg-3 col-xl-2 forecast-item";
+        forecastCard.classList = "card border border-dark ml-2 p-3 cold-day col-5 col-md-4 col-lg-3 col-xl-2 forecast-item";
 
         // create the header
         const forecastHeader = document.createElement("h5");
@@ -175,12 +168,12 @@ function recentCity(city){
 function saveCitiesSearched(city){
     if (recentCitiesArray.length == 0){
         recentCitiesArray.push(city);
-    } else if (recentCitiesArray.length < 5){
+    } else if (recentCitiesArray.length < 8){
         recentCitiesArray.unshift(city);
-    } else if (recentCitiesArray.length >= 5){
+    } else if (recentCitiesArray.length >= 8){
         recentCitiesArray.unshift(city);
-        recentCitiesArray = recentCitiesArray.slice(0,5);
-        recentCityList.removeChild(recentCityList.childNodes[5]);
+        recentCitiesArray = recentCitiesArray.slice(0,8);
+        recentCityList.removeChild(recentCityList.childNodes[8]);
     }
     localStorage.setItem("recent", JSON.stringify(recentCitiesArray));
     renderCities(recentCitiesArray);
@@ -216,6 +209,16 @@ function renderCities(loadCities){
         recentCityListItem.classList = "list-group-item text-center";
         recentCityList.appendChild(recentCityListItem);
     }
+}
+
+function errorInput(){
+    // Add a class that defines an animation
+    cityInputEl.classList.add('error');
+
+    // remove the class after the animation completes
+    setTimeout(function() {
+        cityInputEl.classList.remove('error');
+    }, 300);
 }
 
 loadRecent();

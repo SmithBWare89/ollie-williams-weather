@@ -2,21 +2,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
 </style>
 
-* {
+body {
+    font-family: 'Mukta', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
-body {
-    font-family: 'Mukta', sans-serif;
+header {
+    height: 100%;
+    overflow: none;
 }
 
 .before-click {
     opacity: 0;
 }
 
-.cold-day, .search-btn {
+.cold-day, .search-btn, header {
     background-color: #4d5dfb;
     background-image: linear-gradient(315deg, #4d5dfb 0%, #08c8f6 74%);
 }
@@ -37,6 +40,20 @@ body {
 .very-high {background-color: red;}
 .extreme {background-color: #800080;}
 /* UV Index Styles End */
+
+/* Error For Wrong Input Start*/
+.error {
+    position: relative;
+    animation: shake .1s linear;
+    animation-iteration-count: 3;
+    background-color: red;
+}
+
+@keyframes shake {
+    0% { left: -5px; }
+    100% { right: -5px; }
+}
+/* Error For Wrong Input End */
 
 /* Media Queries */
 @media screen and (max-width: 768px) {

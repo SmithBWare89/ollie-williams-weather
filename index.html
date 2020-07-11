@@ -12,24 +12,35 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Personal CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./assets/images/sun.jpg" type="image/png">
     <title>Ollie Williams Weather</title>
 </head>
 <body>
+    <header class="w-100 m-0 p-2 text-center">
+        <div class="row justify-content-center">
+            <h1 class="align-self-center">Ollie Williams Weather</h1>
+            <img src="./assets/images/ollie-williams.png" height="100" width="100" alt="Ollie Williams weather reporter from TV show Family Guy.">
+        </div>
+    </header>
     <div class="row min-vh-100 no-gutters">
-        <header class="col-12 col-lg-3 d-flex flex-column p-4 p-lg-3">
+        <!-- Input City -->
+        <section class="col-12 col-lg-3 d-flex flex-column p-4 p-lg-3">
             <form class="row mb-4 city-selected">
-                <label class="col-12 form-label" for="city-input">Search for a City:</label>
+                <label class="col-12 form-label" for="city-input">
+                    <h3>Search for a City:</h3>
+                </label>
                 <input type="text" id="city-input" class="col-7 ml-3 mr-1 form-input rounded" autofocus="true">
                 <button type="submit" class="col-3 rounded search-btn"><i class="fas fa-search"></i></button>
             </form>
-
-            <div class="card mt-4">
-                <h3 class="card-header text-center cold-day border-dark rounded text-light">Recent Cities Searched</h3>
+            <!-- Recent Cities Searched -->
+            <div class="card mt-4 rounded">
+                <h3 class="card-header text-center cold-day border-dark rounded">Recent Cities Searched</h3>
                 <ul class="list-group"></ul>
             </div>
-        </header>
-
+        </section>
         <main class="col-12 col-lg-9 d-flex flex-column p-4 p-lg-3 w-100">
+            <!-- Current Weather Forecast -->
             <section class="card before-click current-weather pl-2 mb-3 cold-day border-dark rounded" data-aos>
                 <h1 class="city-searched"></h1>
                 <p>Temperature: <span class="city-temperature"></span> <span>&#8457</span></p>
@@ -37,7 +48,7 @@
                 <p>Wind Speed: <span class="city-wind"></span></p>
                 <p>UV Index: <span class="city-index"></span></p>
             </section>
-        
+        <!-- 5 Day Forecast -->
             <section class="forecast before-click" data-aos>
                 <h1 data-aos="fade=up">5 Day Forecast</h1>
                 <div class="row forecast-row w-100" id="forecast-row"></div>
