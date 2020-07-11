@@ -36,9 +36,14 @@ async function getWeatherInfo(city){
         const unformattedResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLon}&exclude=hourly,minutely&units=imperial&appid=a0453456fb9621adaf5cc02de2936b37&q`);
         const formattedResponse = await unformattedResponse.json();
         
-        recentCity(city);
-        currentDayGenerator(formattedResponse.current, initialFetchFormatted.name);
-        forecastGenerator(formattedResponse);
+        if (recentCitiesArray.includes(city)){
+            currentDayGenerator(formattedResponse.current, initialFetchFormatted.name);
+            forecastGenerator(formattedResponse);
+        } else {
+            recentCity(city);
+            currentDayGenerator(formattedResponse.current, initialFetchFormatted.name);
+            forecastGenerator(formattedResponse);
+        }
     } catch (err) {
        cityInputEl.classList.toggle("border-danger");
     } 
@@ -62,6 +67,7 @@ function inputSubmitHandler(event){
 
     // get value from input
     let city = cityInputEl.value.trim();
+
     // if city name is entered
     if (!regex.test(city)){
         getWeatherInfo(city);
@@ -81,7 +87,6 @@ function populateData(city) {
 function currentDayGenerator(current, name){
     let todaysDate = moment();
     
-    console.log(current)
     currentWeatherContainer.classList.remove("before-click");
     currentWeatherContainer.setAttribute("data-aos", "fade-up");
     const weatherIcon = `<img src='http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png'>`
@@ -157,7 +162,7 @@ function recentCity(city){
         recentCityListItem.classList = "list-group-item text-center";
         recentCityList.appendChild(recentCityListItem);
         return saveCitiesSearched(city);
-    } else{
+    } else if (!recentCitiesArray.includes(city)){
         // If there are items on the list then prepend
         const recentCityListItem = document.createElement("li");
         recentCityListItem.textContent = city;
@@ -177,7 +182,43 @@ function saveCitiesSearched(city){
         recentCitiesArray = recentCitiesArray.slice(0,5);
         recentCityList.removeChild(recentCityList.childNodes[5]);
     }
-    localStorage.setItem("recent", recentCitiesArray);
+    localStorage.setItem("recent", JSON.stringify(recentCitiesArray));
+    renderCities(recentCitiesArray);
 }
 
+function loadRecent(){
+    // If there are no cities in localStorage
+    if ("recent" in localStorage){
+        let loadedCities = [];
+        loadedCities = JSON.parse(localStorage.getItem("recent"));
+        recentCitiesArray = loadedCities;
+        renderCities(loadedCities)
+    } 
+    else {
+        // Set localStorage with empty array
+        localStorage.setItem("recent", []);
+    }
+}
+
+function generateWeather(event){
+    let cityClicked = event.target.textContent;
+    getWeatherInfo(cityClicked);
+}
+
+function renderCities(loadCities){
+    // Set the HTML of the UL to empty
+    recentCityList.innerHTML = "";
+
+    // Re-render the list
+    for (let i = 0; i < loadCities.length; i++) {
+        const recentCityListItem = document.createElement("li");
+        recentCityListItem.textContent = loadCities[i];
+        recentCityListItem.classList = "list-group-item text-center";
+        recentCityList.appendChild(recentCityListItem);
+    }
+}
+
+loadRecent();
+
 cityInputContainer.addEventListener("submit", inputSubmitHandler);
+recentCityList.addEventListener("click", generateWeather);
