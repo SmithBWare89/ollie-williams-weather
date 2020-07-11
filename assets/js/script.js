@@ -81,7 +81,18 @@ function currentDayGenerator(current, name){
     cityTemperatureEl.innerHTML = `${current.temp}`;
     cityHumidityEl.innerHTML = `${current.humidity} %`;
     cityWindSpeedEl.innerHTML = `${current.wind_speed} MPH`;
-    cityUVIndexEl.innerHTML = current.uvi;
+    // cityUVIndexEl.innerHTML = current.uvi;
+    if (current.uvi >= 0 && current.uvi <= 2.99) {
+        cityUVIndexEl.innerHTML = `<span class='low p-1'>${current.uvi}</span>`;
+    } else if (current.uvi >= 3 && current.uvi <= 5.99) {
+        cityUVIndexEl.innerHTML = `<span class='moderate p-1'>${current.uvi}</span>`;
+    } else if (current.uvi >= 6 && current.uvi <= 7.99){
+        cityUVIndexEl.innerHTML = `<span class='high p-1'>${current.uvi}</span>`;
+    } else if (current.uvi >= 8 && current.uvi <= 10.99){
+        cityUVIndexEl.innerHTML = `<span class='very-high p-1'>${current.uvi}</span>`;
+    } else if (current.uvi >= 11){
+        cityUVIndexEl.innerHTML = `<span class='extreme p-1 text-light'>${current.uvi}</span>`;
+    }
 }
 
 function forecastGenerator(forecast) {
@@ -96,7 +107,7 @@ function forecastGenerator(forecast) {
         // create the div
         const forecastCard = document.createElement("div");
         forecastCard.setAttribute("data-aos", "fade-in");
-        forecastCard.classList = "card border border-danger m-1 p-3 cold-day";
+        forecastCard.classList = "card border border-dark m-1 p-3 cold-day";
 
         // create the header
         const forecastHeader = document.createElement("h5");
