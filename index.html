@@ -19,20 +19,18 @@
         <header class="col-12 col-lg-3 d-flex flex-column p-4 p-lg-3">
             <form class="row mb-4 city-selected">
                 <label class="col-12 form-label" for="city-input">Search for a City:</label>
-                <input type="text" id="city-input" class="col-8 mr-1 form-input" autofocus="true">
-                <button type="submit" class="col-2"><i class="fas fa-search"></i></button>
+                <input type="text" id="city-input" class="col-7 ml-3 mr-1 form-input rounded" autofocus="true">
+                <button type="submit" class="col-3 rounded search-btn"><i class="fas fa-search"></i></button>
             </form>
 
             <div class="card mt-4">
-                <h3 class="card-header">Recent Cities</h3>
-                <ul class="list-group">
-                    <button class="list-group-item">Miami</button>
-                </ul>
+                <h3 class="card-header text-center cold-day border-dark rounded text-light">Recent Cities Searched</h3>
+                <ul class="list-group"></ul>
             </div>
         </header>
 
         <main class="col-12 col-lg-9 d-flex flex-column p-4 p-lg-3 w-100">
-            <section class="card before-click current-weather pl-2 mb-3" data-aos>
+            <section class="card before-click current-weather pl-2 mb-3 cold-day border-dark rounded" data-aos>
                 <h1 class="city-searched"></h1>
                 <p>Temperature: <span class="city-temperature"></span> <span>&#8457</span></p>
                 <p>Humidity: <span class="city-humidity"></span></p>

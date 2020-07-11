@@ -1,8 +1,13 @@
 AOS.init();
 
+let recentCitiesArray = [];
+
 // Input Variables
 const cityInputEl = document.querySelector("#city-input");
 const cityInputContainer = document.querySelector(".city-selected");
+
+// Recent City Search Variable
+let recentCityList = document.querySelector(".list-group");
 
 // 5 Day Forecast Variables
 const forecastContainer = document.querySelector(".forecast")
@@ -18,29 +23,38 @@ const cityWindSpeedEl = document.querySelector(".city-wind");
 const cityUVIndexEl = document.querySelector(".city-index");
 
 async function getWeatherInfo(city){
-    const initialFetch = await fetch(`http://api.openweathermap.org/data/2.5/weather?appid=a0453456fb9621adaf5cc02de2936b37&q=${city}`)
-    const initialFetchFormatted = await initialFetch.json();
-    console.log(initialFetchFormatted);
+    try {
+        let initialFetch = await fetch(`http://api.openweathermap.org/data/2.5/weather?appid=a0453456fb9621adaf5cc02de2936b37&q=${city}`);
+        let initialFetchFormatted = await initialFetch.json();
+        // console.log(initialFetchFormatted);
 
-    // Store Latitude and Longitude
-    const cityLat = initialFetchFormatted.coord.lat;
-    const cityLon = initialFetchFormatted.coord.lon;
+        // Store Latitude and Longitude
+        const cityLat = initialFetchFormatted.coord.lat;
+        const cityLon = initialFetchFormatted.coord.lon;
 
-    // Use Lat and Long To One Time Call All Necessary Data
-    const unformattedResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLon}&exclude=hourly,minutely&units=imperial&appid=a0453456fb9621adaf5cc02de2936b37&q`);
-    const formattedResponse = await unformattedResponse.json();
-    console.log(formattedResponse)
-
-    currentDayGenerator(formattedResponse.current, initialFetchFormatted.name)
-    forecastGenerator(formattedResponse)
+        // Use Lat and Long To One Time Call All Necessary Data
+        const unformattedResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLon}&exclude=hourly,minutely&units=imperial&appid=a0453456fb9621adaf5cc02de2936b37&q`);
+        const formattedResponse = await unformattedResponse.json();
+        
+        recentCity(city);
+        currentDayGenerator(formattedResponse.current, initialFetchFormatted.name);
+        forecastGenerator(formattedResponse);
+    } catch (err) {
+       cityInputEl.classList.toggle("border-danger");
+    } 
 }
 
 function inputSubmitHandler(event){
     // prevent submit from refreshing page
     event.preventDefault();
+
     if(citySearchedEl.innerHTML) {
         currentWeatherContainer.setAttribute("data-aos", "fade-out");
         currentWeatherContainer.classList.add("before-click");
+    }
+
+    if (cityInputEl.classList.contains("border-danger")) {
+        cityInputEl.classList.toggle("border-danger");
     }
 
     // values only allowable in form submission
@@ -53,19 +67,15 @@ function inputSubmitHandler(event){
         getWeatherInfo(city);
         return cityInputEl.value = "";
     } else {
-        alert("Invalid City")
+        cityInputEl.classList.toggle("border-danger");
     }
 }
 
 function populateData(city) {
     citySearchedEl.textContent(city.name);
-
-    // convert temp to Fahrenheit
-    let convertedTemp = city[0].main.temp * (9/5) - 459.67;
-    cityTemperatureEl.textContent(convertedTemp);
-
+    cityTemperatureEl.textContent(city.temp);
     cityHumidityEl.textContent(city[0].main.humidity);
-    cityWindEl.textContent(city[0].wind.speed);
+    cityWindSpeedEl.textContent(city[0].wind.speed);
 }
 
 function currentDayGenerator(current, name){
@@ -81,7 +91,7 @@ function currentDayGenerator(current, name){
     cityTemperatureEl.innerHTML = `${current.temp}`;
     cityHumidityEl.innerHTML = `${current.humidity} %`;
     cityWindSpeedEl.innerHTML = `${current.wind_speed} MPH`;
-    // cityUVIndexEl.innerHTML = current.uvi;
+
     if (current.uvi >= 0 && current.uvi <= 2.99) {
         cityUVIndexEl.innerHTML = `<span class='low p-1'>${current.uvi}</span>`;
     } else if (current.uvi >= 3 && current.uvi <= 5.99) {
@@ -102,12 +112,12 @@ function forecastGenerator(forecast) {
 
     let today = moment();
 
-    // Creates Cards
+    // Creates Forecast Cards
     for (let i = 1; i <= 5; i ++) {
         // create the div
         const forecastCard = document.createElement("div");
         forecastCard.setAttribute("data-aos", "fade-in");
-        forecastCard.classList = "card border border-dark m-1 p-3 cold-day";
+        forecastCard.classList = "card border border-dark m-1 p-3 cold-day col-5 col-md-4 col-lg-3 col-xl-2 forecast-item";
 
         // create the header
         const forecastHeader = document.createElement("h5");
@@ -136,6 +146,38 @@ function forecastGenerator(forecast) {
         forecastContainer.classList.remove("before-click");
         forecastContainer.setAttribute("data-aos", "fade-up");
     }
+}
+
+function recentCity(city){
+    // If the recent cities has not items
+    if (!recentCityList.innerHTML){
+        // Create li and append to the list
+        const recentCityListItem = document.createElement("li");
+        recentCityListItem.textContent = city;
+        recentCityListItem.classList = "list-group-item text-center";
+        recentCityList.appendChild(recentCityListItem);
+        return saveCitiesSearched(city);
+    } else{
+        // If there are items on the list then prepend
+        const recentCityListItem = document.createElement("li");
+        recentCityListItem.textContent = city;
+        recentCityListItem.classList = "list-group-item text-center";
+        recentCityList.prepend(recentCityListItem);
+        return saveCitiesSearched(city);
+    }
+}
+
+function saveCitiesSearched(city){
+    if (recentCitiesArray.length == 0){
+        recentCitiesArray.push(city);
+    } else if (recentCitiesArray.length < 5){
+        recentCitiesArray.unshift(city);
+    } else if (recentCitiesArray.length >= 5){
+        recentCitiesArray.unshift(city);
+        recentCitiesArray = recentCitiesArray.slice(0,5);
+        recentCityList.removeChild(recentCityList.childNodes[5]);
+    }
+    localStorage.setItem("recent", recentCitiesArray);
 }
 
 cityInputContainer.addEventListener("submit", inputSubmitHandler);
