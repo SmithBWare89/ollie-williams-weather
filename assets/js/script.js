@@ -24,7 +24,7 @@ const cityUVIndexEl = document.querySelector(".city-index");
 
 async function getWeatherInfo(city){
     try {
-        let initialFetch = await fetch(`http://api.openweathermap.org/data/2.5/weather?appid=a0453456fb9621adaf5cc02de2936b37&q=${city}`);
+        let initialFetch = await fetch(`https://api.openweathermap.org/data/2.5/weather?appid=a0453456fb9621adaf5cc02de2936b37&q=${city}`);
         let initialFetchFormatted = await initialFetch.json();
         // console.log(initialFetchFormatted);
 
