@@ -186,10 +186,6 @@ function loadRecent(){
         loadedCities = JSON.parse(localStorage.getItem("recent"));
         recentCitiesArray = loadedCities;
         renderCities(loadedCities)
-    } 
-    else {
-        // Set localStorage with empty array
-        localStorage.setItem("recent", []);
     }
 }
 
