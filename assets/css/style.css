@@ -61,4 +61,8 @@ header {
         align-items: center;
         font-size: 1.2em;
     }
+
+    header {
+        font-size: 18px;
+    }
 }
