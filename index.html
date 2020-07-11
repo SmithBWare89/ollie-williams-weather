@@ -6,6 +6,10 @@
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Personal CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Ollie Williams Weather</title>
@@ -13,10 +17,13 @@
 <body>
     <div class="row min-vh-100 no-gutters">
         <header class="col-12 col-lg-3 d-flex flex-column p-4 p-lg-3">
-            <label for="city-input">Search for a City:</label>
-            <input type="text" id="city-input">
+            <form class="row mb-4 city-selected">
+                <label class="col-12 form-label" for="city-input">Search for a City:</label>
+                <input type="text" id="city-input" class="col-8 mr-1 form-input" autofocus="true">
+                <button type="submit" class="col-2"><i class="fas fa-search"></i></button>
+            </form>
 
-            <div class="card">
+            <div class="card mt-4">
                 <h3 class="card-header">Recent Cities</h3>
                 <ul class="list-group">
                     <button class="list-group-item">Miami</button>
@@ -24,27 +31,26 @@
             </div>
         </header>
 
-        <main class="col-12 col-lg-3 d-flex flex-column p-4 p-lg-3">
-            <section class="card">
-                <h1>Atlanta</h1>
-                <p>Temperature</p>
-                <p>Humidity</p>
-                <p>Wind Speed</p>
-                <p>UV Index</p>
+        <main class="col-12 col-lg-9 d-flex flex-column p-4 p-lg-3 w-100">
+            <section class="card before-click current-weather pl-2 mb-3" data-aos>
+                <h1 class="city-searched"> </h1>
+                <p>Temperature: <span class="city-temperature"></span> <span>&#8457</span></p>
+                <p>Humidity: <span class="city-humidity"></span></p>
+                <p>Wind Speed: <span class="city-wind"></span></p>
+                <p>UV Index: <span class="city-index"></span></p>
             </section>
-            
-            <section>
-                <h1>5 Day Forecast</h1>
-                <div class="row">
-                    <div class="card">Monday</div>
-                    <div class="card">Tuesday</div>
-                    <div class="card">Wednesday</div>
-                    <div class="card">Thursday</div>
-                    <div class="card">Friday</div>
-                </div>
+        
+            <section class="forecast before-click" data-aos>
+                <h1 data-aos="fade=up">5 Day Forecast</h1>
+                <div class="row forecast-row w-100" id="forecast-row"></div>
             </section>
         </main>
     </div>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <!-- Moment JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <!-- Personal JS -->
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
