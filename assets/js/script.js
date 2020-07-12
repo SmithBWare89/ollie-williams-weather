@@ -123,7 +123,7 @@ function forecastGenerator(forecast) {
         // create the div
         const forecastCard = document.createElement("div");
         forecastCard.setAttribute("data-aos", "fade-up");
-        forecastCard.classList = "card border border-dark ml-2 p-3 cold-day col-5 col-md-4 col-lg-3 col-xl-2 forecast-item";
+        forecastCard.classList = "card border border-dark ml-2 mb-2 p-3 cold-day col-5 col-md-4 col-lg-3 col-xl-2 forecast-item";
 
         // create the header
         const forecastHeader = document.createElement("h5");
