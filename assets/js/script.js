@@ -7,7 +7,7 @@ const cityInputEl = document.querySelector("#city-input");
 const cityInputContainer = document.querySelector(".city-selected");
 
 // Recent City Search Variable
-let recentCityList = document.querySelector(".list-group");
+const recentCityList = document.querySelector(".list-group");
 
 // 5 Day Forecast Variables
 const forecastContainer = document.querySelector(".forecast")
@@ -24,27 +24,31 @@ const cityUVIndexEl = document.querySelector(".city-index");
 
 async function getWeatherInfo(city){
     try {
+        // Try to fetch and format the cities data
         let initialFetch = await fetch(`https://api.openweathermap.org/data/2.5/weather?appid=a0453456fb9621adaf5cc02de2936b37&q=${city}`);
         let initialFetchFormatted = await initialFetch.json();
-        // console.log(initialFetchFormatted);
 
-        // Store Latitude and Longitude
+        // Store the latitude and longitude of the city
         const cityLat = initialFetchFormatted.coord.lat;
         const cityLon = initialFetchFormatted.coord.lon;
 
-        // Use Lat and Long To One Time Call All Necessary Data
+        // Use the cities latitude and longitude to try to fetch and format its forecast
         const unformattedResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLon}&exclude=hourly,minutely&units=imperial&appid=a0453456fb9621adaf5cc02de2936b37&q`);
         const formattedResponse = await unformattedResponse.json();
         
+        // If the city has recently been searched for
         if (recentCitiesArray.includes(city)){
+            // Populate its current and future forecasts only
             currentDayGenerator(formattedResponse.current, initialFetchFormatted.name);
             forecastGenerator(formattedResponse);
         } else {
+            // Otherwise add the city to the list and populate the current and future forecasts
             recentCity(city);
             currentDayGenerator(formattedResponse.current, initialFetchFormatted.name);
             forecastGenerator(formattedResponse);
         }
     } catch (err) {
+        // Add error animation for any issues
        return errorInput();
     } 
 }
@@ -68,7 +72,7 @@ function inputSubmitHandler(event){
     // get value from input
     let city = cityInputEl.value.trim();
 
-    // if city name is entered
+    // if city name is entered, text if it has accepted characters
     if (!regex.test(city)){
         getWeatherInfo(city);
         return cityInputEl.value = "";
@@ -78,18 +82,24 @@ function inputSubmitHandler(event){
 }
 
 function currentDayGenerator(current, name){
-    let todaysDate = moment();
+    // Capture and format todays' date
+    let todaysDate = new Date(current.dt * 1000).toDateString();
     
+    // Show the container
     currentWeatherContainer.classList.remove("before-click");
+    // Allow it to fade up
     currentWeatherContainer.setAttribute("data-aos", "fade-up");
+    // Display image corresponding with the days weather
     const weatherIcon = `<img src='http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png'>`
 
     
-    citySearchedEl.innerHTML = `${name} (${todaysDate.format('M/DD/YYYY')}) ${weatherIcon}`;
+    // Populate the data of the current weather card
+    citySearchedEl.innerHTML = `${name} (${todaysDate}) ${weatherIcon}`;
     cityTemperatureEl.innerHTML = `${current.temp}`;
     cityHumidityEl.innerHTML = `${current.humidity} %`;
     cityWindSpeedEl.innerHTML = `${current.wind_speed} MPH`;
 
+    // Set background color and text content of UV index field based on value
     if (current.uvi >= 0 && current.uvi <= 2.99) {
         cityUVIndexEl.innerHTML = `<span class='low p-1'>${current.uvi}</span>`;
     } else if (current.uvi >= 3 && current.uvi <= 5.99) {
@@ -104,42 +114,42 @@ function currentDayGenerator(current, name){
 }
 
 function forecastGenerator(forecast) {
-    // Clearing DIV
+    // Clear The 5 Day Forecast
     let forecastRowId = document.getElementById("forecast-row");
     forecastRowId.innerHTML = "";
-
-    let today = moment();
 
     // Creates Forecast Cards
     for (let i = 1; i <= 5; i ++) {
         // create the div
         const forecastCard = document.createElement("div");
-        forecastCard.setAttribute("data-aos", "fade-in");
+        forecastCard.setAttribute("data-aos", "fade-up");
         forecastCard.classList = "card border border-dark ml-2 p-3 cold-day col-5 col-md-4 col-lg-3 col-xl-2 forecast-item";
 
         // create the header
         const forecastHeader = document.createElement("h5");
-        forecastHeader.innerHTML = today.add([i], 'days').format('M/DD/YYYY');
+        const newDate = new Date(forecast.daily[i].dt * 1000).toDateString();
+        forecastHeader.textContent = newDate;
         forecastCard.append(forecastHeader);
 
-        // create the img container
+        // create the img
         const weatherIcon = document.createElement("img")
         weatherIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + forecast.daily[i].weather[0].icon + ".png");
         weatherIcon.setAttribute("width", "50px");
         weatherIcon.setAttribute("height", "50px");
         forecastCard.appendChild(weatherIcon);
 
-        // create Temperature container
+        // create Temperature
         const forecastTemp = document.createElement("p");
         forecastTemp.innerHTML = `Temp: ${forecast.daily[i].temp.day} <span>&#8457</span>`;
         forecastCard.appendChild(forecastTemp);
 
-        // create Humidity container
+        // create Humidity
         const forecastHumidity = document.createElement("p");
         forecastHumidity.innerHTML = `Humidity: ${forecast.daily[1].humidity}%`;
         forecastCard.appendChild(forecastHumidity);
+        forecastCard.appendChild(forecastHumidity);
 
-        // Append And Show Forecast
+        // Append And Show Next Day Forecast
         forecastItemsContainer.appendChild(forecastCard);
         forecastContainer.classList.remove("before-click");
         forecastContainer.setAttribute("data-aos", "fade-up");
@@ -147,7 +157,7 @@ function forecastGenerator(forecast) {
 }
 
 function recentCity(city){
-    // If the recent cities has not items
+    // If there are no recent cities listed
     if (!recentCityList.innerHTML){
         // Create li and append to the list
         const recentCityListItem = document.createElement("li");
@@ -155,7 +165,9 @@ function recentCity(city){
         recentCityListItem.classList = "list-group-item text-center";
         recentCityList.appendChild(recentCityListItem);
         return saveCitiesSearched(city);
-    } else if (!recentCitiesArray.includes(city)){
+    } 
+    // If the list doesn't include the city
+    else if (!recentCitiesArray.includes(city)){
         // If there are items on the list then prepend
         const recentCityListItem = document.createElement("li");
         recentCityListItem.textContent = city;
@@ -163,53 +175,74 @@ function recentCity(city){
         recentCityList.prepend(recentCityListItem);
         return saveCitiesSearched(city);
     }
+    // If the city already exists
+    else {
+        return;
+    }
 }
 
 function saveCitiesSearched(city){
+    // If there are no cities in the array
     if (recentCitiesArray.length == 0){
+        // push the city into the array
         recentCitiesArray.push(city);
-    } else if (recentCitiesArray.length < 8){
+    } 
+    // If the length of the array is less than 8
+    else if (recentCitiesArray.length < 8){
+        // push the city to the beginning of the array
         recentCitiesArray.unshift(city);
-    } else if (recentCitiesArray.length >= 8){
+    } 
+    // If there are 8 or more cities in the array
+    else if (recentCitiesArray.length >= 8){
+        // push the new city to the beginning of the array
         recentCitiesArray.unshift(city);
+        // set array to only equal cities 1-8
         recentCitiesArray = recentCitiesArray.slice(0,8);
+        // Remove last city searched
         recentCityList.removeChild(recentCityList.childNodes[8]);
     }
+
+    // Save array into localStorage
     localStorage.setItem("recent", JSON.stringify(recentCitiesArray));
-    renderCities(recentCitiesArray);
+    // Re-render cities
+    renderCitiesSearched(recentCitiesArray);
 }
 
 function loadRecent(){
-    // If there are no cities in localStorage
+    // If there are recent cities in localStorage
     if ("recent" in localStorage){
         let loadedCities = [];
         loadedCities = JSON.parse(localStorage.getItem("recent"));
         recentCitiesArray = loadedCities;
-        renderCities(loadedCities)
+        renderCitiesSearched(loadedCities)
     }
 }
 
 function generateWeather(event){
+    // Take the city clicked
     let cityClicked = event.target.textContent;
+    // Generate its information
     getWeatherInfo(cityClicked);
 }
 
-function renderCities(loadCities){
-    // Set the HTML of the UL to empty
+function renderCitiesSearched(cities){
+    // Set the HTML of the the  to empty
     recentCityList.innerHTML = "";
 
     // Re-render the list
-    for (let i = 0; i < loadCities.length; i++) {
+    for (let i = 0; i < cities.length; i++) {
         const recentCityListItem = document.createElement("li");
-        recentCityListItem.textContent = loadCities[i];
+        recentCityListItem.textContent = cities[i];
         recentCityListItem.classList = "list-group-item text-center";
         recentCityList.appendChild(recentCityListItem);
     }
 }
 
 function errorInput(){
-    // Add a class that defines an animation
+    // Add error animation
     cityInputEl.classList.add('error');
+    // Set input value to empty
+    cityInputEl.value = "";
 
     // remove the class after the animation completes
     setTimeout(function() {
