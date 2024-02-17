@@ -9,7 +9,7 @@ import { SearchToolComponent } from '../search-tool/search-tool.component';
   styleUrl: './results-container.component.css',
 })
 export class ResultsContainerComponent {
-  public searchForCity(city: string | undefined): string | undefined {
+  public searchForCity(city: string): string {
     return city;
   }
 }
