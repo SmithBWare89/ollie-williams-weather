@@ -23,15 +23,26 @@ export class ResultsContainerService {
   private storeCity(city: string): void {
     if (!this.storageExists()) {
       this.storedCities$.next([city]);
-    } else {
-      // Parse local storage and update behavior subject with new info
-      this.parseStoredCities();
-      this.storedCities$.next([city, ...this.storedCities$.value]);
+      this.setItems();
+      return;
     }
-    this.storage.setItem(
-      this.storageTitle,
-      JSON.stringify(this.storedCities$.value),
+    // Parse local storage and update behavior subject with new info
+    this.parseStoredCities();
+
+    // Check for duplicates
+    const hasDuplicates = this.storedCities$.value.some(
+      (val: string): boolean => val === city,
     );
+
+    if (hasDuplicates) {
+      const index: number = this.storedCities$.value.indexOf(city);
+      // Delete where the duplicate city exists
+      this.storedCities$.value.splice(index, 1);
+    }
+
+    // Proceed
+    this.storedCities$.next([city, ...this.storedCities$.value]);
+    this.setItems();
   }
 
   private getStoredValue(): string | null {
@@ -50,5 +61,12 @@ export class ResultsContainerService {
     typeof storedValue === 'string'
       ? this.storedCities$.next([])
       : this.storedCities$.next(storedValue);
+  }
+
+  private setItems() {
+    this.storage.setItem(
+      this.storageTitle,
+      JSON.stringify(this.storedCities$.value),
+    );
   }
 }
