@@ -7,6 +7,7 @@
       type="text"
       id="city-input"
       class="grid-cols-7 ml-3 mr-1 p-2 rounded border-2 border-slate-400 shadow-md shadow-slate-400 w-full"
+      [ngClass]="{ error: error$ | async }"
       #searchedCity
       [autofocus]="true"
       (keyup)="onChange(searchedCity.value)"
