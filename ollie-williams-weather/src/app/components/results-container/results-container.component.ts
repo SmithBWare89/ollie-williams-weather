@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {SearchToolComponent} from "../search-tool/search-tool.component";
+import { SearchToolComponent } from '../search-tool/search-tool.component';
 
 @Component({
   selector: 'app-results-container',
@@ -8,4 +8,8 @@ import {SearchToolComponent} from "../search-tool/search-tool.component";
   templateUrl: './results-container.component.html',
   styleUrl: './results-container.component.css',
 })
-export class ResultsContainerComponent {}
+export class ResultsContainerComponent {
+  public searchForCity(city: string | undefined): string | undefined {
+    return city;
+  }
+}

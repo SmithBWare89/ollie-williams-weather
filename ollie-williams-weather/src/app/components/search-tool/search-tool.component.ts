@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faMagnifyingGlass,
@@ -15,14 +15,22 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SearchToolComponent {
   public magnifyingGlass: IconDefinition = faMagnifyingGlass;
+  private regEx: RegExp = /\w+/g;
   private searchedCity$: BehaviorSubject<string | undefined> =
     new BehaviorSubject<string | undefined>(undefined);
-  private searchedCityEvent: EventEmitter<string> = new EventEmitter<string>();
-  public onChange(city: string) {
-    this.searchedCity$.next(city.trim());
+  @Output() searchedCityEvent: EventEmitter<string | undefined> =
+    new EventEmitter<string | undefined>();
+  public onChange(city: string): void {
+    if (this.validateSearchedCity(city)) {
+      this.searchedCity$.next(city.trim());
+    }
+    this.searchedCity$.next(undefined);
     this.emitCity();
   }
-  private emitCity() {
+  private emitCity(): void {
     this.searchedCityEvent.emit(this.searchedCity$.value);
+  }
+  private validateSearchedCity(city: string): boolean {
+    return !!city.match(this.regEx);
   }
 }
