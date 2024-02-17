@@ -22,6 +22,11 @@ export class ResultsContainerComponent {
   private searchedCity: string = '';
 
   public setSearchedCity(city: string) {
-    this.searchedCity = city;
+    this.resultsContainerService.setSearchedCity(city);
+    this.setStoredCities();
+  }
+
+  private setStoredCities() {
+    this._storedCities$.next(this.resultsContainerService.getSearchedCities());
   }
 }

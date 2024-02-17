@@ -10,13 +10,13 @@ export class ResultsContainerService {
   private storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
-  public addSearchedCity(city: string): void {
+  public setSearchedCity(city: string): void {
     this.storeCity(city);
   }
 
-  public retrieveSearchedCities(): string[] {
+  public getSearchedCities(): string[] {
     if (!this.getStoredValue()) return this.storedCities$.value;
-    this.parseCities();
+    this.parseStoredCities();
     return this.storedCities$.value;
   }
 
@@ -24,6 +24,9 @@ export class ResultsContainerService {
     if (!this.storageExists()) {
       this.storedCities$.next([city]);
     } else {
+      // Parse local storage and update behavior subject with new info
+      this.parseStoredCities();
+      this.storedCities$.next([city, ...this.storedCities$.value]);
     }
     this.storage.setItem(
       this.storageTitle,
@@ -39,17 +42,13 @@ export class ResultsContainerService {
     return this.storage.hasOwnProperty(this.storageTitle);
   }
 
-  private parseCities(): void {
-    if (!this.storageExists()) {
-      this.storedCities$.next([]);
-      return;
-    }
+  private parseStoredCities(): void {
     const storedValue: string | string[] = JSON.parse(
       this.storage.getItem(this.storageTitle) ?? '',
     );
+    // This should never be truthy as we are only going to store an array
     typeof storedValue === 'string'
       ? this.storedCities$.next([])
       : this.storedCities$.next(storedValue);
-    return;
   }
 }

@@ -43,6 +43,7 @@ export class SearchToolComponent {
       return;
     }
     this.searchedCityEvent.emit(validatedResult);
+    this.citySearchForm.controls['searchCity'].setValue('');
   }
 
   private validateSearchedCity(): string | boolean {
