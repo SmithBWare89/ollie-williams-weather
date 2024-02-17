@@ -27,12 +27,13 @@ export class SearchToolComponent {
     new EventEmitter<string | undefined>();
   public onChange(city: string): void {
     this._error$.next(false);
-    if (!this.validateSearchedCity(city)) {
+    const searchedCity: string = city.trim();
+    if (!this.validateSearchedCity(searchedCity)) {
       this.searchedCity$.next(undefined);
       this._error$.next(true);
       return;
     }
-    this.searchedCity$.next(city.trim());
+    this.searchedCity$.next(searchedCity);
     this.emitCity();
   }
   private emitCity(): void {
