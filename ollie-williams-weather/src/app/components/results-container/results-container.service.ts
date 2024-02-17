@@ -10,33 +10,46 @@ export class ResultsContainerService {
   private storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
-  public setCities(value: string): void {
-    this.storedCities$.next(
-      this.storageExists() ? [value, ...this.storedCities$.value] : [value],
-    );
-    this.storeCities();
+  public addSearchedCity(city: string): void {
+    this.storeCity(city);
   }
 
-  public getCities(): string[] {
-    if (!this.storageExists()) return [];
-    return this.parsedCities();
+  public retrieveSearchedCities(): string[] {
+    if (!this.getStoredValue()) return this.storedCities$.value;
+    this.parseCities();
+    return this.storedCities$.value;
   }
 
-  private storeCities(): void {
+  private storeCity(city: string): void {
+    if (!this.storageExists()) {
+      this.storedCities$.next([city]);
+    } else {
+    }
     this.storage.setItem(
-      'recentCities',
+      this.storageTitle,
       JSON.stringify(this.storedCities$.value),
     );
   }
 
-  private storageExists(): boolean {
-    return this.storageTitle in this.storage;
+  private getStoredValue(): string | null {
+    return this.storage.getItem(this.storageTitle);
   }
 
-  private parsedCities(): string[] {
-    this.storedCities$.next(
-      JSON.parse(this.storage.getItem(this.storageTitle)),
+  private storageExists(): boolean {
+    return this.storage.hasOwnProperty(this.storageTitle);
+  }
+
+  private parseCities(): void {
+    if (!this.storageExists()) {
+      this.storedCities$.next([]);
+      return;
+    }
+    const storedValue: string | string[] = JSON.parse(
+      this.storage.getItem(this.storageTitle) ?? '',
     );
-    return this.storedCities$.value;
+    typeof storedValue === 'string'
+      ? this.storedCities$.next([])
+      : this.storedCities$.next(storedValue);
+    return;
   }
 }
