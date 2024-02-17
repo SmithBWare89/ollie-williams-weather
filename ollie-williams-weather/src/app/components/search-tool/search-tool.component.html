@@ -2,18 +2,19 @@
   <label for="city-input" class="grid-cols-12">
     <h3 class="text-3xl">Search for a city:</h3>
   </label>
-  <div class="w-full flex flex-row flex-nowrap mt-2">
-    <input
-      type="text"
-      id="city-input"
-      class="grid-cols-7 ml-3 mr-1 p-2 rounded border-2 border-slate-400 shadow-md shadow-slate-400 w-full"
-      [ngClass]="{ error: error$ | async }"
-      #searchedCity
-      [autofocus]="true"
-      (keyup)="onChange(searchedCity.value)"
-      placeholder="Search for a city here!"
-    />
-    <button type="submit" class="grid-cols-1 p-0 w-[50px] rounded bg-gradientPattern bg-default mt-0.5">
+  <div class="w-full flex flex-row justify-between flex-nowrap mt-2">
+    <form [formGroup]="citySearchForm" (ngSubmit)="onSubmit()">
+      <input
+        type="text"
+        id="city-input"
+        class="grid-cols-7 ml-3 mr-1 p-2 rounded border-2 border-slate-400 shadow-md shadow-slate-400 w-full"
+        formControlName="searchCity"
+        [ngClass]="{ error: error$ | async }"
+        [autofocus]="true"
+        placeholder="Search for a city here!"
+      />
+    </form>
+    <button type="submit" class="grid-cols-1 p-0 w-[50px] rounded bg-gradientPattern bg-default mt-0.5" (click)="onSubmit()">
       <fa-icon [icon]="magnifyingGlass"></fa-icon>
     </button>
   </div>

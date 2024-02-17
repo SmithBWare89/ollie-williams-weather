@@ -10,7 +10,8 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './recent-search.component.css',
 })
 export class RecentSearchComponent {
-  @Input() searchedCities(cities: string[] | undefined) {
+  @Input() set searchedCities(cities: string[] | null) {
+    console.log(cities);
     if (!cities) return;
     this._cities$.next(cities);
   }
