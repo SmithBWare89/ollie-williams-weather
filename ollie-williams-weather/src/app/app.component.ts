@@ -4,6 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SearchToolComponent } from './components/search-tool/search-tool.component';
 import { ResultsContainerComponent } from './components/results-container/results-container.component';
 import { HeroComponent } from './components/hero/hero.component';
+import {ForecastComponent} from "./components/forecast/forecast.component";
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { HeroComponent } from './components/hero/hero.component';
     SearchToolComponent,
     ResultsContainerComponent,
     HeroComponent,
+    ForecastComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
