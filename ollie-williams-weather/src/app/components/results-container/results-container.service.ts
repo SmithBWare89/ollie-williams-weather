@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map, Observable, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,20 +28,10 @@ export class ResultsContainerService {
     }
     // Parse local storage and update behavior subject with new info
     this.parseStoredCities();
-
-    // Check for duplicates
-    const hasDuplicates = this.storedCities$.value.some(
-      (val: string): boolean => val === city,
-    );
-
-    if (hasDuplicates) {
-      const index: number = this.storedCities$.value.indexOf(city);
-      // Delete where the duplicate city exists
-      this.storedCities$.value.splice(index, 1);
-    }
-
+    // Validate before saving
+    this.validateBeforeSave(city);
+    console.log(this.storedCities$.value);
     // Proceed
-    this.storedCities$.next([city, ...this.storedCities$.value]);
     this.setItems();
   }
 
@@ -68,5 +58,32 @@ export class ResultsContainerService {
       this.storageTitle,
       JSON.stringify(this.storedCities$.value),
     );
+  }
+
+  private validateBeforeSave(city: string) {
+    const cities$: Observable<string> = this.storedCities$.pipe(
+      map((cities: string[]) => this.checkForDuplicates(cities, city)),
+      map((cities: string[]) => this.validateLength(cities, city)),
+      take(1),
+    );
+  }
+
+  private checkForDuplicates(cities: string[], city: string): string[] {
+    const hasDuplicates: boolean = cities.some(
+      (val: string): boolean => val === city,
+    );
+    if (hasDuplicates) {
+      const index: number = cities.indexOf(city);
+      return cities.splice(index);
+    }
+    return cities;
+  }
+
+  private validateLength(cities: string[], city: string): string[] {
+    cities.push(city);
+    if (cities.length > 6) {
+      cities.pop();
+    }
+    return cities;
   }
 }
