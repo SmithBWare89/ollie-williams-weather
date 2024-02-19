@@ -1,4 +1,4 @@
-  <div class="w-full grid-cols-12 lg:grid-cols-3 flex flex-col p-4 lg:p-3">
+  <div class="w-[400px] flex flex-col p-4 lg:p-3">
     <app-search-tool (searchedCityEvent)="setSearchedCity($event)"></app-search-tool>
     <app-recent-search [searchedCities]="storedCities$ | async"></app-recent-search>
   </div>
