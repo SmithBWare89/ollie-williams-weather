@@ -1,8 +1,0 @@
-<div class="w-[400px] flex flex-col p-4 lg:p-3">
-  <app-search-tool
-    (searchedCityEvent)="setSearchedCity($event)"
-  ></app-search-tool>
-  <app-recent-search
-    [searchedCities]="storedCities$ | async"
-  ></app-recent-search>
-</div>
