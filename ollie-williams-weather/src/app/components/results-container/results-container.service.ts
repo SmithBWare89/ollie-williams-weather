@@ -21,8 +21,9 @@ export class ResultsContainerService {
     string[]
   >([]);
 
-  public setSearchedCity(city: string): void {
-    this.storeCity(city);
+  public storeCities(cities: string[]): void {
+    this.storedCities$.next(cities);
+    this.setCities();
   }
 
   public getSearchedCities(): string[] {
@@ -31,20 +32,8 @@ export class ResultsContainerService {
     return this.storedCities$.value;
   }
 
-  private storeCity(city: string): void {
-    if (!this.storageExists()) {
-      this.storedCities$.next([city]);
-    }
-    // Proceed
-    this.setItems();
-  }
-
   private getStoredValue(): string | null {
     return this.storage.getItem(this.storageTitle);
-  }
-
-  private storageExists(): boolean {
-    return this.storage.hasOwnProperty(this.storageTitle);
   }
 
   private parseStoredCities(): void {
@@ -57,7 +46,7 @@ export class ResultsContainerService {
       : this.storedCities$.next(storedValue);
   }
 
-  private setItems() {
+  private setCities() {
     this.storage.setItem(
       this.storageTitle,
       JSON.stringify(this.storedCities$.value),
