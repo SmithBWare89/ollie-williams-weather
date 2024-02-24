@@ -29,7 +29,8 @@ export class ResultsContainerComponent {
   private _searchedCity$: BehaviorSubject<string> = new BehaviorSubject<string>(
     '',
   );
-  private searchedCity$ = this._searchedCity$.asObservable();
+  private searchedCity$: Observable<string> =
+    this._searchedCity$.asObservable();
 
   public setSearchedCity(city: string) {
     this._searchedCity$.next(city);
@@ -41,7 +42,7 @@ export class ResultsContainerComponent {
     const citiesWithoutDuplicates$: Observable<string[]> =
       this.searchedCity$.pipe(
         combineLatestWith(this.storedCities$),
-        map(([city, storedCities]) => {
+        map(([city, storedCities]): string[] => {
           if (!storedCities.length) return [city];
           const hasDuplicates: boolean = storedCities.some(
             (storedCity: string): boolean => city === storedCity,
@@ -60,7 +61,7 @@ export class ResultsContainerComponent {
 
     const trimmedCitiesList$: Observable<string[]> =
       citiesWithoutDuplicates$.pipe(
-        map((cities) => {
+        map((cities: string[]): string[] => {
           if (cities.length > 6) {
             cities.pop();
           }
@@ -71,7 +72,7 @@ export class ResultsContainerComponent {
 
     trimmedCitiesList$
       .pipe(
-        tap((cities) => {
+        tap((cities: string[]): void => {
           this._storedCities$.next(cities);
         }),
         take(1),
