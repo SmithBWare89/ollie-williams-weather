@@ -4,7 +4,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { SearchToolComponent } from './components/search-tool/search-tool.component';
 import { ResultsContainerComponent } from './components/results-container/results-container.component';
 import { HeroComponent } from './components/hero/hero.component';
-import {ForecastComponent} from "./components/forecast/forecast.component";
+import { ForecastComponent } from './components/forecast/forecast.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import {ForecastComponent} from "./components/forecast/forecast.component";
     ResultsContainerComponent,
     HeroComponent,
     ForecastComponent,
+    HttpClientModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

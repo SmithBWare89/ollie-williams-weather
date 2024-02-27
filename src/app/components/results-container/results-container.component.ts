@@ -11,6 +11,7 @@ import {
   tap,
 } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-results-container',
@@ -20,7 +21,11 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './results-container.component.css',
 })
 export class ResultsContainerComponent {
-  constructor(private resultsContainerService: ResultsContainerService) {}
+  constructor(
+    private resultsContainerService: ResultsContainerService,
+    private appService: AppService,
+  ) {}
+
   private _storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >(this.resultsContainerService.getSearchedCities());
@@ -36,6 +41,7 @@ export class ResultsContainerComponent {
     this._searchedCity$.next(city);
     this.validateSearchedCity();
     this.resultsContainerService.storeCities(this._storedCities$.value);
+    this.appService.getCity(city);
   }
 
   private validateSearchedCity(): void {

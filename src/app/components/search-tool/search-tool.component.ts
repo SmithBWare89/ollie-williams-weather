@@ -33,6 +33,7 @@ export class SearchToolComponent {
     false,
   );
   public error$: Observable<boolean> = this._error$.asObservable();
+
   @Output() searchedCityEvent: EventEmitter<string> =
     new EventEmitter<string>();
   public onSubmit(): void {
