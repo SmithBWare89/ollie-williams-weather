@@ -19,7 +19,9 @@ export class AppService {
   private _currentCityData$: BehaviorSubject<ForecastType | undefined> =
     new BehaviorSubject<ForecastType | undefined>(undefined);
 
-  public async getCity(city: string): Promise<ForecastType | undefined> {
+  public async getCityForecast(
+    city: string,
+  ): Promise<ForecastType | undefined> {
     const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
     const request$ = this.http.get(url).pipe(
       map((data) => {

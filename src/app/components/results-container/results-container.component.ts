@@ -46,7 +46,9 @@ export class ResultsContainerComponent {
     this._searchedCity$.next(city);
     this.validateSearchedCity();
     this.resultsContainerService.storeCities(this._storedCities$.value);
-    this._searchedCityForecast$.next(await this.appService.getCity(city));
+    this._searchedCityForecast$.next(
+      await this.appService.getCityForecast(city),
+    );
     console.log(this._searchedCityForecast$.value);
   }
 
