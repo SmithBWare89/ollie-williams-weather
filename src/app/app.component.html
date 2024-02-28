@@ -1,8 +1,10 @@
 <app-header></app-header>
 <div class="h-full w-full flex flex-row flex-nowrap mt-3">
-    <app-results-container></app-results-container>
+    <app-results-container
+      (searchedCityForecast)="setForecast($event)"></app-results-container>
     <div class="w-full flex flex-col flex-nowrap">
-      <app-hero></app-hero>
-      <app-forecast></app-forecast>
+      <app-hero [currentForecast]="(currentWeather$ | async) ?? undefined"></app-hero>
+      <app-forecast
+        [fiveDayForecast]="(fiveDayForecast$ | async) ?? undefined"></app-forecast>
     </div>
 </div>

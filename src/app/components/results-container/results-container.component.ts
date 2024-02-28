@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { SearchToolComponent } from '../search-tool/search-tool.component';
 import { ResultsContainerService } from '../../service/results-container.service';
 import { RecentSearchComponent } from '../recent-search/recent-search.component';
@@ -39,16 +39,15 @@ export class ResultsContainerComponent {
   );
   private searchedCity$: Observable<string> =
     this._searchedCity$.asObservable();
-  private _searchedCityForecast$: BehaviorSubject<ForecastType | undefined> =
-    new BehaviorSubject<ForecastType | undefined>(undefined);
-  public searchedCityForecast$: Observable<ForecastType | undefined> =
-    this._searchedCityForecast$.asObservable();
+
+  @Output() searchedCityForecast: EventEmitter<ForecastType | undefined> =
+    new EventEmitter<ForecastType | undefined>();
 
   public async setSearchedCity(city: string): Promise<void> {
     this._searchedCity$.next(city);
     this.validateSearchedCity();
     this.resultsContainerService.savedSearchedCities(this._storedCities$.value);
-    this._searchedCityForecast$.next(
+    this.searchedCityForecast.emit(
       await this.resultsContainerService.getCityForecast(city),
     );
   }

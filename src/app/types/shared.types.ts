@@ -5,7 +5,7 @@ type WeatherDescription = {
   main: string;
 };
 
-type CurrentWeatherType = {
+export type CurrentWeatherType = {
   dewPoint: number;
   cloudCover: number;
   feelsLike: number;
@@ -24,7 +24,7 @@ type ForecastTemperatureType = {
   max: number;
 };
 
-type WeatherForecastType = {
+export type WeatherForecastType = {
   dewPoint: number;
   cloudCover: number;
   feelsLike: number;
