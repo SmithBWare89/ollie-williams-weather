@@ -49,9 +49,8 @@ export class ResultsContainerComponent {
     this.validateSearchedCity();
     this.resultsContainerService.savedSearchedCities(this._storedCities$.value);
     this._searchedCityForecast$.next(
-      await this.resultsContainerService.getCtiyForecast(city),
+      await this.resultsContainerService.getCityForecast(city),
     );
-    console.log(this._searchedCityForecast$.value);
   }
 
   private validateSearchedCity(): void {

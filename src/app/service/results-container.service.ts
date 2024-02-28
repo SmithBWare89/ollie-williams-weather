@@ -22,7 +22,7 @@ export class ResultsContainerService {
     this.setCities();
   }
 
-  public async getCtiyForecast(
+  public async getCityForecast(
     city: string,
   ): Promise<ForecastType | undefined> {
     return await this.setCityForecast(city);
@@ -55,7 +55,7 @@ export class ResultsContainerService {
     );
   }
 
-  public async setCityForecast(
+  private async setCityForecast(
     city: string,
   ): Promise<ForecastType | undefined> {
     const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
@@ -67,10 +67,6 @@ export class ResultsContainerService {
     );
 
     return await lastValueFrom<ForecastType | undefined>(request$);
-  }
-
-  public getCityForecast(): ForecastType | undefined {
-    return this._currentCityData$.value;
   }
 
   private toResponseType({
