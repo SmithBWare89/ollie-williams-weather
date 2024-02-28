@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, map, take } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map, Observable, take } from 'rxjs';
 import { ForecastType } from '../types/shared.types';
 import { HttpClient } from '@angular/common/http';
 
@@ -59,7 +59,7 @@ export class ResultsContainerService {
     city: string,
   ): Promise<ForecastType | undefined> {
     const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
-    const request$ = this.http.get(url).pipe(
+    const request$: Observable<ForecastType> = this.http.get(url).pipe(
       map((data) => {
         return this.toResponseType(data);
       }),
