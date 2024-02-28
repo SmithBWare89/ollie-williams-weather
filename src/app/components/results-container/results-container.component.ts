@@ -11,21 +11,23 @@ import {
   tap,
 } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { AppService } from '../../service/app.service';
 import { ForecastType } from '../../types/shared.types';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-results-container',
   standalone: true,
-  imports: [SearchToolComponent, RecentSearchComponent, AsyncPipe],
+  imports: [
+    SearchToolComponent,
+    RecentSearchComponent,
+    AsyncPipe,
+    HttpClientModule,
+  ],
   templateUrl: './results-container.component.html',
   styleUrl: './results-container.component.css',
 })
 export class ResultsContainerComponent {
-  constructor(
-    private resultsContainerService: ResultsContainerService,
-    private appService: AppService,
-  ) {}
+  constructor(private resultsContainerService: ResultsContainerService) {}
 
   private _storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
@@ -45,11 +47,10 @@ export class ResultsContainerComponent {
   public async setSearchedCity(city: string): Promise<void> {
     this._searchedCity$.next(city);
     this.validateSearchedCity();
-    this.resultsContainerService.storeCities(this._storedCities$.value);
+    this.resultsContainerService.savedSearchedCities(this._storedCities$.value);
     this._searchedCityForecast$.next(
-      await this.appService.getCityForecast(city),
+      await this.resultsContainerService.getCtiyForecast(city),
     );
-    console.log(this._searchedCityForecast$.value);
   }
 
   private validateSearchedCity(): void {

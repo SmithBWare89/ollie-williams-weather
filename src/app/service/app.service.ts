@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  BehaviorSubject,
-  catchError,
-  lastValueFrom,
-  map,
-  Observable,
-  take,
-} from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map, take } from 'rxjs';
 import { ForecastType } from '../types/shared.types';
 
 @Injectable({
@@ -19,7 +12,7 @@ export class AppService {
   private _currentCityData$: BehaviorSubject<ForecastType | undefined> =
     new BehaviorSubject<ForecastType | undefined>(undefined);
 
-  public async getCityForecast(
+  public async setCityForecast(
     city: string,
   ): Promise<ForecastType | undefined> {
     const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
@@ -31,6 +24,10 @@ export class AppService {
     );
 
     return await lastValueFrom<ForecastType | undefined>(request$);
+  }
+
+  public getCityForecast(): ForecastType | undefined {
+    return this._currentCityData$.value;
   }
 
   private toResponseType({
