@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppService } from '../../service/app.service';
 
@@ -11,4 +11,9 @@ import { AppService } from '../../service/app.service';
 })
 export class RecentSearchComponent {
   @Input() searchedCities: string[] | null = null;
+  @Output() searchCity: EventEmitter<string> = new EventEmitter<string>();
+
+  public searchForCity(city: string) {
+    this.searchCity.emit(city);
+  }
 }

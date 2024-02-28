@@ -4,5 +4,6 @@
   ></app-search-tool>
   <app-recent-search
     [searchedCities]="storedCities$ | async"
+    (searchCity)="setSearchedCity($event)"
   ></app-recent-search>
 </div>
