@@ -61,7 +61,7 @@ export class ResultsContainerService {
     const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
     const request$: Observable<ForecastType> = this.http.get(url).pipe(
       map((data) => {
-        return this.toResponseType(data);
+        return this.toResponseType(<ForecastType>data, city);
       }),
       take(1),
     );
@@ -69,14 +69,12 @@ export class ResultsContainerService {
     return await lastValueFrom<ForecastType | undefined>(request$);
   }
 
-  private toResponseType({
-    currentForecast,
-    fiveDayForecast,
-    latitude,
-    longitude,
-  }: any): ForecastType {
+  private toResponseType(
+    { currentForecast, fiveDayForecast, latitude, longitude }: ForecastType,
+    city: string,
+  ): ForecastType {
     return {
-      currentForecast,
+      currentForecast: { ...currentForecast, city },
       fiveDayForecast,
       latitude,
       longitude,

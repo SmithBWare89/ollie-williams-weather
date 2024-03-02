@@ -16,6 +16,7 @@ export type CurrentWeatherType = {
   weather: WeatherDescription[];
   windSpeed: number;
   date: number;
+  city?: string;
 };
 
 type ForecastTemperatureType = {

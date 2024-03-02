@@ -1,11 +1,16 @@
-<div
-  class="h-[300px] w-auto mr-4 font-medium p-2 mb-3 ml-4 bg-default bg-gradientPattern border-2 border-neutral-700 rounded flex flex-col flex-nowrap justify-around"
->
-  <h1 class="text-4xl flex flex-row flex-nowrap items-center">Boston (Mon Feb 19 2024)
-    <img src="http://openweathermap.org/img/wn/02d@2x.png"/>
-  </h1>
-  <p class="text-lg">Temperature: 35.22 F</p>
-  <p class="text-lg">Humidity: 40%</p>
-  <p class="text-lg">Wind Speed: 17.27 MPH</p>
-  <p class="text-lg">UV Index: <span class="bg-low p-1 rounded">2.16</span></p>
-</div>
+<ng-container *ngIf="currentForecast">
+  <div
+    class="h-[300px] w-auto mr-4 font-medium p-2 mb-3 ml-4 bg-default bg-gradientPattern border-2 border-neutral-700 rounded flex flex-col flex-nowrap justify-around"
+  >
+    <h1 class="text-4xl flex flex-row flex-nowrap items-center">{{ currentForecast.city }}
+      (Mon Feb 19
+                                                                          2024)
+      <img src="http://openweathermap.org/img/wn/02d@2x.png"/>
+    </h1>
+    <p class="text-lg">Temperature: 35.22 F</p>
+    <p class="text-lg">Humidity: 40%</p>
+    <p class="text-lg">Wind Speed: 17.27 MPH</p>
+    <p class="text-lg">UV Index: <span class="bg-low p-1 rounded">2.16</span></p>
+  </div>
+
+</ng-container>
