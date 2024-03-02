@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, lastValueFrom, map, Observable, take } from 'rxjs';
-import { ForecastType } from '../types/shared.types';
+import { ForecastType } from '../shared/shared.types';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

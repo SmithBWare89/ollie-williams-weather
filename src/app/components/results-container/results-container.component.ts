@@ -11,8 +11,8 @@ import {
   tap,
 } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { ForecastType } from '../../types/shared.types';
 import { HttpClientModule } from '@angular/common/http';
+import { ForecastType } from '../../shared/shared.types';
 
 @Component({
   selector: 'app-results-container',

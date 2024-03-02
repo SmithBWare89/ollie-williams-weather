@@ -11,7 +11,7 @@ import {
   CurrentWeatherType,
   ForecastType,
   WeatherForecastType,
-} from './types/shared.types';
+} from './shared/shared.types';
 import { AsyncPipe } from '@angular/common';
 
 @Component({

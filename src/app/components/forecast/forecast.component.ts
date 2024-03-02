@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ForecastCardComponent } from './forecast-card/forecast-card.component';
-import { WeatherForecastType } from '../../types/shared.types';
+import { WeatherForecastType } from '../../shared/shared.types';
 
 @Component({
   selector: 'app-forecast',
