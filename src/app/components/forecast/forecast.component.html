@@ -1,5 +1,5 @@
 <ng-container *ngIf="!!fiveDayForecast">
-  <div class="w-auto h-full flex flex-row flex-wrap content-between swing-in-top-fwd">
+  <div class="w-auto flex flex-row flex-wrap content-between swing-in-top-fwd">
     <h1 class="text-4xl ml-3 font-medium self-start my-2">5 Day Forecast</h1>
     <ng-container *ngFor="let forecast of fiveDayForecast | slice: 1 : 6">
       <app-forecast-card [forecast]="forecast"></app-forecast-card>

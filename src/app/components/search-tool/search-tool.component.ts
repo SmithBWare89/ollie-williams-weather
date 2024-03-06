@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faMagnifyingGlass,
@@ -22,6 +22,10 @@ import {
   styleUrl: './search-tool.component.css',
 })
 export class SearchToolComponent {
+  @Input() set searchError(bool: boolean) {
+    this._error$.next(bool);
+  }
+
   public magnifyingGlass: IconDefinition = faMagnifyingGlass;
   private regEx: RegExp = /^[A-Za-z ]*$/g;
   public citySearchForm = new FormGroup({
@@ -38,22 +42,25 @@ export class SearchToolComponent {
     new EventEmitter<string>();
   public onSubmit(): void {
     this._error$.next(false);
-    const validatedResult: string | boolean = this.validateSearchedCity();
-    if (typeof validatedResult === 'boolean') {
+    const searchedCity: string | null | undefined =
+      this.citySearchForm.get('searchCity')?.value;
+    const validatedFormInput: string =
+      this.validateSearchedCityForm(searchedCity);
+    if (!validatedFormInput.length) {
       this._error$.next(true);
       return;
     }
-    this.searchedCityEvent.emit(validatedResult);
+    this.searchedCityEvent.emit(validatedFormInput);
     this.citySearchForm.controls['searchCity'].setValue('');
   }
 
-  private validateSearchedCity(): string | boolean {
-    const searchedCity: string | null | undefined =
-      this.citySearchForm.get('searchCity')?.value;
+  private validateSearchedCityForm(
+    searchedCity: string | null | undefined,
+  ): string {
+    if (!searchedCity) return '';
     return !this.citySearchForm.hasError('required') &&
-      searchedCity &&
       searchedCity.match(this.regEx)
       ? searchedCity.trim()
-      : false;
+      : '';
   }
 }

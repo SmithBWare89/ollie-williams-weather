@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom, map, take } from 'rxjs';
-import { ForecastType } from '../types/shared.types';
+import { BehaviorSubject, lastValueFrom, map, Observable, take } from 'rxjs';
+import { ForecastType } from '../shared/shared.types';
 
 @Injectable({
   providedIn: 'any',
 })
 export class AppService {
+  private storage: Storage = localStorage;
+  private storageTitle: string = 'recentCities';
+  private storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
+    string[]
+  >([]);
   constructor(private http: HttpClient) {}
-
-  private _currentCityData$: BehaviorSubject<ForecastType | undefined> =
-    new BehaviorSubject<ForecastType | undefined>(undefined);
-
   public async setCityForecast(
     city: string,
   ): Promise<ForecastType | undefined> {
@@ -25,11 +26,6 @@ export class AppService {
 
     return await lastValueFrom<ForecastType | undefined>(request$);
   }
-
-  public getCityForecast(): ForecastType | undefined {
-    return this._currentCityData$.value;
-  }
-
   private toResponseType({
     currentForecast,
     fiveDayForecast,
@@ -42,5 +38,37 @@ export class AppService {
       latitude,
       longitude,
     };
+  }
+
+  public saveSearchedCities(cities: string[]): void {
+    this.storedCities$.next(cities);
+    this.setCities();
+  }
+
+  private getStoredValue(): string | null {
+    return this.storage.getItem(this.storageTitle);
+  }
+
+  public getSearchedCities(): string[] {
+    if (!this.getStoredValue()) return this.storedCities$.value;
+    this.parseStoredCities();
+    return this.storedCities$.value;
+  }
+
+  private parseStoredCities(): void {
+    const storedValue: string | string[] = JSON.parse(
+      this.storage.getItem(this.storageTitle) ?? '',
+    );
+    // This should never be truthy as we are only going to store an array
+    typeof storedValue === 'string'
+      ? this.storedCities$.next([])
+      : this.storedCities$.next(storedValue);
+  }
+
+  private setCities() {
+    this.storage.setItem(
+      this.storageTitle,
+      JSON.stringify(this.storedCities$.value),
+    );
   }
 }

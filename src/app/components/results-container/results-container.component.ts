@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { SearchToolComponent } from '../search-tool/search-tool.component';
-import { ResultsContainerService } from '../../service/results-container.service';
 import { RecentSearchComponent } from '../recent-search/recent-search.component';
 import {
   BehaviorSubject,
   combineLatestWith,
+  lastValueFrom,
   map,
   Observable,
   take,
@@ -13,6 +13,7 @@ import {
 import { AsyncPipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ForecastType } from '../../shared/shared.types';
+import { AppService } from '../../service/app.service';
 
 @Component({
   selector: 'app-results-container',
@@ -27,11 +28,11 @@ import { ForecastType } from '../../shared/shared.types';
   styleUrl: './results-container.component.css',
 })
 export class ResultsContainerComponent {
-  constructor(private resultsContainerService: ResultsContainerService) {}
+  constructor(private appService: AppService) {}
 
   private _storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
-  >(this.resultsContainerService.getSearchedCities());
+  >(this.appService.getSearchedCities());
   public storedCities$: Observable<string[]> =
     this._storedCities$.asObservable();
   private _searchedCity$: BehaviorSubject<string> = new BehaviorSubject<string>(
@@ -40,19 +41,32 @@ export class ResultsContainerComponent {
   private searchedCity$: Observable<string> =
     this._searchedCity$.asObservable();
 
+  private _error$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
+  public error$: Observable<boolean> = this._error$.asObservable();
+
   @Output() searchedCityForecast: EventEmitter<ForecastType | undefined> =
     new EventEmitter<ForecastType | undefined>();
+  @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public async setSearchedCity(city: string): Promise<void> {
+    this.loading.emit(true);
+    this._error$.next(false);
     this._searchedCity$.next(city);
-    this.validateSearchedCity();
-    this.resultsContainerService.savedSearchedCities(this._storedCities$.value);
-    this.searchedCityForecast.emit(
-      await this.resultsContainerService.getCityForecast(city),
-    );
+    this._storedCities$.next(await this.validateSearchedCities());
+    const forecast: ForecastType | undefined =
+      await this.appService.setCityForecast(city);
+    if (!forecast) {
+      this._error$.next(true);
+      this.loading.emit(false);
+      return;
+    }
+    this.loading.emit(false);
+    this.searchedCityForecast.emit(forecast);
   }
 
-  private validateSearchedCity(): void {
+  private async validateSearchedCities(): Promise<string[]> {
     const citiesWithoutDuplicates$: Observable<string[]> =
       this.searchedCity$.pipe(
         combineLatestWith(this.storedCities$),
@@ -84,13 +98,14 @@ export class ResultsContainerComponent {
         take(1),
       );
 
-    trimmedCitiesList$
-      .pipe(
-        tap((cities: string[]): void => {
-          this._storedCities$.next(cities);
+    return await lastValueFrom(
+      trimmedCitiesList$.pipe(
+        map((cities: string[]): string[] => {
+          this.appService.saveSearchedCities(cities);
+          return cities;
         }),
         take(1),
-      )
-      .subscribe();
+      ),
+    );
   }
 }

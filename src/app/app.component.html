@@ -1,8 +1,10 @@
 <app-header></app-header>
 <app-results-container
   (searchedCityForecast)="setForecast($event)"
+  (loading)="setLoading($event)"
 ></app-results-container>
 <app-hero [currentForecast]="(currentWeather$ | async) ?? undefined"></app-hero>
 <app-forecast
   [fiveDayForecast]="(fiveDayForecast$ | async) ?? undefined"
 ></app-forecast>
+<app-loader [loading]="(loading$ | async) ?? false"></app-loader>

@@ -1,6 +1,7 @@
 <div class="w-full lg:w-[400px] flex flex-col p-4 lg:p-3">
   <app-search-tool
     (searchedCityEvent)="setSearchedCity($event)"
+    [searchError]="(error$ | async) ?? false"
   ></app-search-tool>
   <app-recent-search
     [searchedCities]="storedCities$ | async"
