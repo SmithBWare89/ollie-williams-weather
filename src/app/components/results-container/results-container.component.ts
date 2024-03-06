@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SearchToolComponent } from '../search-tool/search-tool.component';
 import { RecentSearchComponent } from '../recent-search/recent-search.component';
 import {
   BehaviorSubject,
   combineLatestWith,
-  lastValueFrom,
   map,
   Observable,
   take,
@@ -27,13 +26,14 @@ import { AppService } from '../../service/app.service';
   templateUrl: './results-container.component.html',
   styleUrl: './results-container.component.css',
 })
-export class ResultsContainerComponent {
+export class ResultsContainerComponent implements OnInit {
   constructor(private appService: AppService) {}
 
-  private storedCities$: Observable<string[]> =
-    this.appService.storedCities$.pipe(
-      map((storedCities: string[]) => storedCities),
-    );
+  private _storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
+    string[]
+  >([]);
+  public storedCities$: Observable<string[]> =
+    this._storedCities$.asObservable();
   private _searchedCity$: BehaviorSubject<string> = new BehaviorSubject<string>(
     '',
   );
@@ -44,6 +44,10 @@ export class ResultsContainerComponent {
     false,
   );
   public error$: Observable<boolean> = this._error$.asObservable();
+
+  async ngOnInit(): Promise<void> {
+    await this.getStoredValues();
+  }
 
   @Output() searchedCityForecast: EventEmitter<ForecastType | undefined> =
     new EventEmitter<ForecastType | undefined>();
@@ -84,6 +88,7 @@ export class ResultsContainerComponent {
       .pipe(
         tap((cities: string[]): void => {
           this.appService.saveSearchedCities(cities);
+          this._storedCities$.next(this.appService.getStoredCities());
         }),
         take(1),
       )
@@ -109,5 +114,19 @@ export class ResultsContainerComponent {
       }),
       take(1),
     );
+  }
+
+  private async getStoredValues() {
+    const storedValues: string[] = this.appService.getStoredCities();
+    if (!storedValues.length) {
+      this._storedCities$.next(storedValues);
+      return;
+    }
+    this.loading.emit(true);
+    const forecast: ForecastType | undefined =
+      await this.appService.setCityForecast(storedValues[0]);
+    this.loading.emit(false);
+    this.searchedCityForecast.emit(forecast);
+    this._storedCities$.next(storedValues);
   }
 }

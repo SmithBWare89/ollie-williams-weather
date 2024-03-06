@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  BehaviorSubject,
-  catchError,
-  last,
-  lastValueFrom,
-  map,
-  Observable,
-  take,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map, Observable } from 'rxjs';
 import { ForecastType } from '../shared/shared.types';
 
 @Injectable({
@@ -21,9 +12,7 @@ export class AppService {
 
   private _storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
-  >([]);
-  public storedCities$: Observable<string[]> =
-    this._storedCities$.asObservable();
+  >(this.parseStoredCities());
   constructor(private http: HttpClient) {}
   public async setCityForecast(
     city: string,
@@ -57,24 +46,17 @@ export class AppService {
     this.setCities();
   }
 
-  private getStoredValue(): string | null {
-    return this.storage.getItem(this.storageTitle);
+  private storageExists(): boolean {
+    return !!this.storage.getItem(this.storageTitle);
   }
 
-  public getSearchedCities(): string[] {
-    if (!this.getStoredValue()) return this._storedCities$.value;
-    this.parseStoredCities();
-    return this._storedCities$.value;
-  }
-
-  private parseStoredCities(): void {
+  private parseStoredCities(): string[] {
+    if (!this.storageExists()) return [];
     const storedValue: string | string[] = JSON.parse(
       this.storage.getItem(this.storageTitle) ?? '',
     );
     // This should never be truthy as we are only going to store an array
-    typeof storedValue === 'string'
-      ? this._storedCities$.next([])
-      : this._storedCities$.next(storedValue);
+    return typeof storedValue === 'string' ? [] : storedValue;
   }
 
   private setCities() {
@@ -82,5 +64,9 @@ export class AppService {
       this.storageTitle,
       JSON.stringify(this._storedCities$.value),
     );
+  }
+
+  public getStoredCities(): string[] {
+    return this.parseStoredCities();
   }
 }
