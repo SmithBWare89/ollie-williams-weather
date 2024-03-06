@@ -12,5 +12,6 @@ import { convertDate } from '../../shared/shared.utility';
 })
 export class HeroComponent {
   @Input() currentForecast: CurrentWeatherType | undefined = undefined;
+  @Input() loading: boolean = false;
   protected readonly convertDate = convertDate;
 }

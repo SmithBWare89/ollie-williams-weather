@@ -1,6 +1,7 @@
 <ng-container *ngIf="!!currentForecast">
   <div
-    class="swing-in-top-fwd h-[300px] w-auto mr-4 font-medium p-2 mb-3 ml-4 bg-default bg-gradientPattern border-2 border-neutral-700 rounded flex flex-col flex-nowrap justify-around"
+    class="h-[300px] w-auto mr-4 font-medium p-2 mb-3 ml-4 bg-default bg-gradientPattern border-2 border-neutral-700 rounded flex flex-col flex-nowrap justify-around"
+    [ngClass]="{ 'swing-in-top-fwd': !loading }"
   >
     <h1 class="text-4xl flex flex-row flex-nowrap items-center">{{ currentForecast.city }}
       ({{ convertDate(currentForecast.date) | date:'longDate' }})
