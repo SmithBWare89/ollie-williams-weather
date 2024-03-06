@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { ForecastCardComponent } from './forecast-card/forecast-card.component';
 import { WeatherForecastType } from '../../shared/shared.types';
-import { NgForOf, SlicePipe } from '@angular/common';
+import { NgForOf, NgIf, SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-forecast',
   standalone: true,
-  imports: [ForecastCardComponent, NgForOf, SlicePipe],
+  imports: [ForecastCardComponent, NgForOf, SlicePipe, NgIf],
   templateUrl: './forecast.component.html',
   styleUrl: './forecast.component.css',
 })
