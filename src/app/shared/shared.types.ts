@@ -13,6 +13,7 @@ export type CurrentWeatherType = {
   sunset: number;
   temp: number;
   uvi: number;
+  humidity: number;
   weather: WeatherDescription[];
   windSpeed: number;
   date: number;
@@ -32,6 +33,7 @@ export type WeatherForecastType = {
   sunrise: number;
   sunset: number;
   uvi: number;
+  humidity: number;
   weather: WeatherDescription[];
   windSpeed: number;
   date: number;

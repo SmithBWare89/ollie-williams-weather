@@ -57,6 +57,7 @@ export class ResultsContainerComponent {
     this._storedCities$.next(await this.validateSearchedCities());
     const forecast: ForecastType | undefined =
       await this.appService.setCityForecast(city);
+    console.log(forecast);
     if (!forecast) {
       this._error$.next(true);
       this.loading.emit(false);
