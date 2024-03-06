@@ -15,23 +15,29 @@
       </ng-container>
     </h1>
     <div class="w-full flex flex-row flex-nowrap justify-between">
-      <div class="w-auto flex flex-col flex-nowrap self-stretch">
-        <p class="text-lg">Temperature: {{ currentForecast.temp }} F</p>
-        <p class="text-lg">Humidity: {{ currentForecast.feelsLike }}%</p>
-        <p class="text-lg">Wind Speed: {{ currentForecast.windSpeed }} MPH</p>
-        <p class="text-lg">
+      <div class="w-auto flex flex-col flex-nowrap">
+        <p class="text-lg my-1">Temperature: {{ currentForecast.temp }} F</p>
+        <p class="text-lg my-1">Humidity: {{ currentForecast.feelsLike }}%</p>
+        <p class="text-lg my-1">
+          Wind Speed: {{ currentForecast.windSpeed }} MPH
+        </p>
+        <p class="text-lg my-1">
           UV Index:
           <span class="bg-low p-1 rounded">{{ currentForecast.uvi }}</span>
         </p>
       </div>
       <div class="w-auto flex flex-col flex-nowrap justify-self-end">
-        <p class="text-lg">Cloud Cover: {{ currentForecast.cloudCover }}%</p>
-        <p class="text-lg">Feels Like: {{ currentForecast.feelsLike }} F</p>
-        <p class="text-lg">
+        <p class="text-lg my-1">
+          Cloud Cover: {{ currentForecast.cloudCover }}%
+        </p>
+        <p class="text-lg my-1">
+          Feels Like: {{ currentForecast.feelsLike }} F
+        </p>
+        <p class="text-lg my-1">
           Sunrise:
           {{ convertDate(currentForecast.sunrise) | date: "shortTime" }}
         </p>
-        <p class="text-lg">
+        <p class="text-lg my-1">
           Sunset: {{ convertDate(currentForecast.sunset) | date: "shortTime" }}
         </p>
       </div>
