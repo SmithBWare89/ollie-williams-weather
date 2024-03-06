@@ -18,9 +18,12 @@ import { ForecastType } from '../shared/shared.types';
 export class AppService {
   private storage: Storage = localStorage;
   private storageTitle: string = 'recentCities';
-  private storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
+
+  private _storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
+  public storedCities$: Observable<string[]> =
+    this._storedCities$.asObservable();
   constructor(private http: HttpClient) {}
   public async setCityForecast(
     city: string,
@@ -28,7 +31,7 @@ export class AppService {
     const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
     return await lastValueFrom(
       this.http.get(url).pipe(
-        map((data) => {
+        map((data): undefined | ForecastType => {
           if (!data) return undefined;
           return this.toResponseType(data);
         }),
@@ -50,7 +53,7 @@ export class AppService {
   }
 
   public saveSearchedCities(cities: string[]): void {
-    this.storedCities$.next(cities);
+    this._storedCities$.next(cities);
     this.setCities();
   }
 
@@ -59,9 +62,9 @@ export class AppService {
   }
 
   public getSearchedCities(): string[] {
-    if (!this.getStoredValue()) return this.storedCities$.value;
+    if (!this.getStoredValue()) return this._storedCities$.value;
     this.parseStoredCities();
-    return this.storedCities$.value;
+    return this._storedCities$.value;
   }
 
   private parseStoredCities(): void {
@@ -70,14 +73,14 @@ export class AppService {
     );
     // This should never be truthy as we are only going to store an array
     typeof storedValue === 'string'
-      ? this.storedCities$.next([])
-      : this.storedCities$.next(storedValue);
+      ? this._storedCities$.next([])
+      : this._storedCities$.next(storedValue);
   }
 
   private setCities() {
     this.storage.setItem(
       this.storageTitle,
-      JSON.stringify(this.storedCities$.value),
+      JSON.stringify(this._storedCities$.value),
     );
   }
 }

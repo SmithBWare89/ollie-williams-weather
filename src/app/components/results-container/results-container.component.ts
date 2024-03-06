@@ -30,11 +30,10 @@ import { AppService } from '../../service/app.service';
 export class ResultsContainerComponent {
   constructor(private appService: AppService) {}
 
-  private _storedCities$: BehaviorSubject<string[]> = new BehaviorSubject<
-    string[]
-  >(this.appService.getSearchedCities());
-  public storedCities$: Observable<string[]> =
-    this._storedCities$.asObservable();
+  private storedCities$: Observable<string[]> =
+    this.appService.storedCities$.pipe(
+      map((storedCities: string[]) => storedCities),
+    );
   private _searchedCity$: BehaviorSubject<string> = new BehaviorSubject<string>(
     '',
   );
@@ -54,39 +53,21 @@ export class ResultsContainerComponent {
     this.loading.emit(true);
     this._error$.next(false);
     this._searchedCity$.next(city);
-    this._storedCities$.next(await this.validateSearchedCities());
     const forecast: ForecastType | undefined =
       await this.appService.setCityForecast(city);
-    console.log(forecast);
     if (!forecast) {
       this._error$.next(true);
       this.loading.emit(false);
       return;
     }
+    this.storeSearchedCities();
     this.loading.emit(false);
     this.searchedCityForecast.emit(forecast);
   }
 
-  private async validateSearchedCities(): Promise<string[]> {
+  private storeSearchedCities(): void {
     const citiesWithoutDuplicates$: Observable<string[]> =
-      this.searchedCity$.pipe(
-        combineLatestWith(this.storedCities$),
-        map(([city, storedCities]): string[] => {
-          if (!storedCities.length) return [city];
-          const hasDuplicates: boolean = storedCities.some(
-            (storedCity: string): boolean => city === storedCity,
-          );
-          if (hasDuplicates) {
-            const index: number = storedCities.indexOf(city);
-            storedCities.splice(index, 1);
-            storedCities.unshift(city);
-            return storedCities;
-          }
-          storedCities.unshift(city);
-          return storedCities;
-        }),
-        take(1),
-      );
+      this.validateNoDuplicateStoredCity$();
 
     const trimmedCitiesList$: Observable<string[]> =
       citiesWithoutDuplicates$.pipe(
@@ -99,14 +80,34 @@ export class ResultsContainerComponent {
         take(1),
       );
 
-    return await lastValueFrom(
-      trimmedCitiesList$.pipe(
-        map((cities: string[]): string[] => {
+    trimmedCitiesList$
+      .pipe(
+        tap((cities: string[]): void => {
           this.appService.saveSearchedCities(cities);
-          return cities;
         }),
         take(1),
-      ),
+      )
+      .subscribe();
+  }
+
+  private validateNoDuplicateStoredCity$(): Observable<string[]> {
+    return this.searchedCity$.pipe(
+      combineLatestWith(this.storedCities$),
+      map(([city, storedCities]): string[] => {
+        if (!storedCities.length) return [city];
+        const hasDuplicates: boolean = storedCities.some(
+          (storedCity: string): boolean => city === storedCity,
+        );
+        if (hasDuplicates) {
+          const index: number = storedCities.indexOf(city);
+          storedCities.splice(index, 1);
+          storedCities.unshift(city);
+          return storedCities;
+        }
+        storedCities.unshift(city);
+        return storedCities;
+      }),
+      take(1),
     );
   }
 }
