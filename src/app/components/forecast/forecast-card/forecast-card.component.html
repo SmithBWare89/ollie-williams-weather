@@ -1,8 +1,9 @@
 <ng-container *ngIf="!!forecast">
-  <div class="w-48 h-48 border-2 border-neutral-700 rounded bg-gradientPattern bg-default flex flex-cols flex-wrap p-2">
-    <p class="font-medium text-lg">{{ convertDate(forecast.date) | date:'fullDate'}}</p>
-    <img src="http://openweathermap.org/img/wn/02d@2x.png" height="50" width="50"/>
-    <p>Temp: {{ forecast.temp.day }} degrees</p>
-    <p>Humidty: 31%</p>
-  </div>
+<div class="w-48 h-52 border-2 border-neutral-700 rounded bg-gradientPattern bg-default flex flex-cols flex-wrap p-2 mx-1">
+
+  <p class="font-medium text-lg">{{ convertDate(forecast.date) | date:'fullDate'}}</p>
+  <img src="http://openweathermap.org/img/wn/02d@2x.png" height="50" width="50"/>
+  <p>Temp: {{ forecast.temp.day }} degrees</p>
+  <p>Humidty: 31%</p>
+</div>
 </ng-container>

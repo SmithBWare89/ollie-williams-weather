@@ -1,6 +1,6 @@
-  <h1 class="text-4xl ml-3 font-medium">5 Day Forecast</h1>
-  <div class="flex flex-row flex-nowrap mt-2 justify-around">
-      <ng-container *ngFor="let forecast of fiveDayForecast | slice:1:6; let i = index">
-        <app-forecast-card [forecast]="forecast"></app-forecast-card>
-      </ng-container>
-  </div>
+<div class="w-auto h-full flex flex-row flex-wrap content-between">
+  <h1 class="text-4xl ml-3 font-medium self-start my-2">5 Day Forecast</h1>
+  <ng-container *ngFor="let forecast of fiveDayForecast | slice:1:6; let i = index">
+    <app-forecast-card [forecast]="forecast"></app-forecast-card>
+  </ng-container>
+</div>
