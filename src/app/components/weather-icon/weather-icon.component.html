@@ -1,0 +1,8 @@
+<ng-container *ngIf="description$ | async as description">
+  <img
+    src="http://openweathermap.org/img/wn/{{ description.icon }}@2x.png"
+    class="w-20 h-20 inline-block"
+    alt="{{ description.description }}"
+    id="{{ description.iconId }}"
+  />
+</ng-container>

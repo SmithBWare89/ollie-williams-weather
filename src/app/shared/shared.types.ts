@@ -1,4 +1,4 @@
-type WeatherDescription = {
+export type WeatherDescription = {
   description: string;
   icon: string;
   iconId: number;
