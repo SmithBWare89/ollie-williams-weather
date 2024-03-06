@@ -1,12 +1,12 @@
 <ng-container *ngIf="!!fiveDayForecast">
   <div
-    class="w-auto flex flex-row flex-wrap xs:justify-center"
+    class="w-auto flex flex-row flex-wrap justify-center sm:justify-evenly"
     [ngClass]="{ 'swing-in-top-fwd': !loading }"
   >
     <h1 class="text-4xl ml-3 font-medium self-start my-2 basis-full">
       5 Day Forecast
     </h1>
-    <ng-container *ngFor="let forecast of fiveDayForecast | slice: 1 : 6">
+    <ng-container *ngFor="let forecast of fiveDayForecast">
       <app-forecast-card [forecast]="forecast"></app-forecast-card>
     </ng-container>
   </div>

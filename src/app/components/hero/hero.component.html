@@ -3,15 +3,38 @@
     class="h-[300px] w-auto mr-4 font-medium p-2 mb-3 ml-4 bg-default bg-gradientPattern border-2 border-neutral-700 rounded flex flex-col flex-nowrap justify-around"
     [ngClass]="{ 'swing-in-top-fwd': !loading }"
   >
-    <h1 class="text-4xl flex flex-row flex-nowrap items-center">{{ currentForecast.city }}
-      ({{ convertDate(currentForecast.date) | date:'longDate' }})
-      <img src="http://openweathermap.org/img/wn/02d@2x.png"/>
+    <h1
+      class="xs:text-3xl sm:text-4xl flex flex-row flex-nowrap items-center justify-between"
+    >
+      {{ currentForecast.city }}
+      {{
+        convertDate(currentForecast.date) | date: "EEEE, MMMM d, y, h:mm:ss a"
+      }}
+      <ng-container *ngFor="let weather of currentForecast.weather">
+        <app-weather-icon [weatherDescription]="weather"></app-weather-icon>
+      </ng-container>
     </h1>
-    <p class="text-lg">Temperature: {{ currentForecast.temp }} F</p>
-    <p class="text-lg">Humidity: {{ currentForecast.feelsLike }}%</p>
-    <p class="text-lg">Wind Speed: {{ currentForecast.windSpeed }} MPH</p>
-    <p class="text-lg">UV Index: <span
-            class="bg-low p-1 rounded">{{ currentForecast.uvi }}</span></p>
+    <div class="w-full flex flex-row flex-nowrap justify-between">
+      <div class="w-auto flex flex-col flex-nowrap self-stretch">
+        <p class="text-lg">Temperature: {{ currentForecast.temp }} F</p>
+        <p class="text-lg">Humidity: {{ currentForecast.feelsLike }}%</p>
+        <p class="text-lg">Wind Speed: {{ currentForecast.windSpeed }} MPH</p>
+        <p class="text-lg">
+          UV Index:
+          <span class="bg-low p-1 rounded">{{ currentForecast.uvi }}</span>
+        </p>
+      </div>
+      <div class="w-auto flex flex-col flex-nowrap justify-self-end">
+        <p class="text-lg">Cloud Cover: {{ currentForecast.cloudCover }}%</p>
+        <p class="text-lg">Feels Like: {{ currentForecast.feelsLike }} F</p>
+        <p class="text-lg">
+          Sunrise:
+          {{ convertDate(currentForecast.sunrise) | date: "shortTime" }}
+        </p>
+        <p class="text-lg">
+          Sunset: {{ convertDate(currentForecast.sunset) | date: "shortTime" }}
+        </p>
+      </div>
+    </div>
   </div>
-
 </ng-container>

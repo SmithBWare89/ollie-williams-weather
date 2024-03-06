@@ -1,6 +1,6 @@
 <ng-container *ngIf="!!forecast">
   <div
-    class="w-80 h-56 border-2 border-neutral-700 rounded bg-gradientPattern bg-default flex flex-col p-2 m-2"
+    class="w-80 sm:w-64 h-56 border-2 border-neutral-700 rounded bg-gradientPattern bg-default flex flex-col p-2 m-2"
   >
     <p class="font-medium text-xl basis-full">
       {{ convertDate(forecast.date) | date: "fullDate" }}
