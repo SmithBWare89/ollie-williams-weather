@@ -9,6 +9,7 @@ app.use(express.static(__dirname + "/dist/ollie-williams-weather"));
 
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
+console.log("Server running!");
 
 app.get("/*", function (req, res) {
   console.log(__dirname + "/dist/ollie-williams-weather/browser/index.html");
