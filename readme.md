@@ -1,5 +1,6 @@
 # <img src="./src/assets/ollie-williams.png" height="100" width="100" alt="Ollie Williams weather reporter from TV show Family Guy."> Ollie Williams Weather (https://ollie-williams-angular-2cb6f6d5653d.herokuapp.com/)
 
+## [Weather Backend Repository](https://github.com/SmithBWare89/weather-backend)
 
 ## Description
 **Update**: This project has been update to showcase skills that I've learned. I've updated this project to use AngularJs (v17), Tailwind CSS, RxJS, and an Express server to serve the final build of the application on Heroku. In order to protect the API key, I've developed a backend that's also deployed on Heroku as a proxy server for my requests to the OpenWeather API.

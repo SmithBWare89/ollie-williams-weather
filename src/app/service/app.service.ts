@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, lastValueFrom, map, Observable } from 'rxjs';
 import { ForecastType } from '../shared/shared.types';
@@ -17,7 +17,7 @@ export class AppService {
   public async setCityForecast(
     city: string,
   ): Promise<ForecastType | undefined> {
-    const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
+    const url: string = `${isDevMode() ? 'http://localhost:3000' : 'https://ollie-weather-backend-cd657e24fe9a.herokuapp.com'}/${city}`;
     return await lastValueFrom(
       this.http.get(url).pipe(
         map((data): undefined | ForecastType => {
