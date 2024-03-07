@@ -3,6 +3,8 @@
 ## Description
 This particular project is an ode to one of my favorite Family Guy characters, Ollie Williams. If you weren't aware, Ollie Williams is a meteorologist on the fictional hit television show "Family Guy." He provides a quick bit of comic relief that always amused me so when this project came up in my boot camp there was only one name that came to mind - Ollie. I hope that you enjoy this app, it's functionality, and the useful bits of information that it provides for you. I'm still very new in my journey as a developer but I wanted this to be a great representation of not only my skills but my ability to utilize the resources around me. Enjoy!
 
+**Update** I've since refactored this project to use AngularJs, RxJs, and Tailwind CSS to create a similar experience. To add additional security to the API component of this project, I've created a backend that's hosted 
+
 ## Acceptance Criteria
 - GIVEN a weather dashboard with form inputs
 - WHEN I search for a city
