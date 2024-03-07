@@ -11,6 +11,7 @@ app.use(express.static(__dirname + "/dist/ollie-williams-weather"));
 app.listen(process.env.PORT || 8080);
 
 app.get("/*", function (req, res) {
+  console.log(__dirname + "/dist/ollie-williams-weather/browser/index.html");
   res.sendFile(
     path.join(__dirname + "/dist/ollie-williams-weather/browser/index.html"),
   );
