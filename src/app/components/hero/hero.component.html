@@ -17,13 +17,13 @@
       </ng-container>
     </div>
     <div class="w-full flex flex-row flex-nowrap justify-between">
-      <div class="flex flex-col flex-nowrap">
-        <p class="text-lg my-1">Temperature: {{ currentForecast.temp }} F</p>
-        <p class="text-lg my-1">Humidity: {{ currentForecast.feelsLike }}%</p>
-        <p class="text-lg my-1">
+      <div class="flex flex-col flex-nowrap text-lg">
+        <p class="my-1">Temperature: {{ currentForecast.temp }} F</p>
+        <p class="my-1">Humidity: {{ currentForecast.feelsLike }}%</p>
+        <p class="my-1">
           Wind Speed: {{ currentForecast.windSpeed }} MPH
         </p>
-        <p class="text-lg my-1">
+        <p class="my-1">
           UV Index:
           <span
             class="p-1 rounded"
@@ -38,19 +38,19 @@
           >
         </p>
       </div>
-      <div class="w-auto flex flex-col flex-nowrap gap-y-1 text-lg">
-        <p>Cloud Cover: {{ currentForecast.cloudCover }}%</p>
-        <p>Feels Like: {{ currentForecast.feelsLike }} F</p>
-        <p>
+      <div class="w-auto flex flex-col flex-nowrap text-lg">
+        <p class="my-1">Cloud Cover: {{ currentForecast.cloudCover }}%</p>
+        <p class="my-1">Feels Like: {{ currentForecast.feelsLike }} F</p>
+        <p class="my-1">
           Sunrise:
           {{ convertDate(currentForecast.sunrise) | date: "shortTime" }}
         </p>
-        <p>
+        <p class="my-1">
           Sunset: {{ convertDate(currentForecast.sunset) | date: "shortTime" }}
         </p>
       </div>
-      <div class="w-auto flex flex-col flex-nowrap gap-y-1 text-lg">
-        <p>Dew Point: {{ currentForecast.dewPoint }}%</p>
+      <div class="w-auto flex flex-col flex-nowrap text-lg">
+        <p class="my-1">Dew Point: {{ currentForecast.dewPoint }}%</p>
       </div>
     </div>
   </div>
