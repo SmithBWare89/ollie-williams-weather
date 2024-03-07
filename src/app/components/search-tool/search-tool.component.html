@@ -3,18 +3,18 @@
     <h3 class="text-3xl">Search for a city:</h3>
   </label>
   <div class="w-full flex flex-row justify-between flex-nowrap mt-2">
-    <form [formGroup]="citySearchForm" (ngSubmit)="onSubmit()" class="xs:w-64 md:w-[41rem]">
+    <form [formGroup]="citySearchForm" (ngSubmit)="onSubmit()" class="xs:w-[20rem] sm:w-[35rem] md:w-[41rem] lg:w-[18rem]">
       <input
         type="text"
         id="city-input"
-        class="w-full lg:w-[300px] lg:ml-2 mr-1 p-2 rounded border-2 border-slate-400 shadow-md shadow-slate-400"
+        class="w-full lg:ml-2 mr-1 p-2 rounded border-2 border-slate-400 shadow-md shadow-slate-400"
         formControlName="searchCity"
         [ngClass]="{ error: error$ | async }"
         [autofocus]="true"
         placeholder="Search for a city here!"
       />
     </form>
-    <button type="submit" class="p-0 w-12 lg:w-[90px] border-2 border-black rounded bg-gradientPattern bg-default mt-0.5" (click)="onSubmit()">
+    <button type="submit" class="p-0 w-12 lg:w-[51px] border-2 border-black rounded bg-gradientPattern bg-default mt-0.5" (click)="onSubmit()">
       <fa-icon [icon]="magnifyingGlass"></fa-icon>
     </button>
   </div>

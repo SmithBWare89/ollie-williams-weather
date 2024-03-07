@@ -3,12 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
+body {
   min-height: 100vh;
   height: auto;
   width: auto;
-  margin: 0;
-  overflow: auto;
 }
 
 /* ----------------------------------------------

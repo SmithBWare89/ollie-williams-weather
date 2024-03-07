@@ -1,16 +1,21 @@
 <app-header></app-header>
-  <div class="flex flex-col flex-nowrap lg:flex-row">
-    <app-results-container
-      (searchedCityForecast)="setForecast($event)"
-      (loading)="setLoading($event)"
-    ></app-results-container>
-    <app-hero
-      [currentForecast]="(currentWeather$ | async) ?? undefined"
-      [loading]="(loading$ | async) ?? false"
-    ></app-hero>
+  <div class="flex flex-nowrap xs:flex-col lg:flex-row">
+    <div class="flex-auto flex-col w-auto">
+      <app-results-container
+        (searchedCityForecast)="setForecast($event)"
+        (loading)="setLoading($event)"
+      ></app-results-container>
+    </div>
+    <div class="flex-auto flex-col w-auto">
+      <app-hero
+        [currentForecast]="(currentWeather$ | async) ?? undefined"
+        [loading]="(loading$ | async) ?? false"
+      ></app-hero>
+      <app-forecast
+        [fiveDayForecast]="(fiveDayForecast$ | async) ?? undefined"
+        [loading]="(loading$ | async) ?? false"
+      ></app-forecast>
+    </div>
+
   </div>
-    <app-forecast
-      [fiveDayForecast]="(fiveDayForecast$ | async) ?? undefined"
-      [loading]="(loading$ | async) ?? false"
-    ></app-forecast>
 <app-loader [loading]="(loading$ | async) ?? false"></app-loader>
