@@ -57,7 +57,7 @@ export class AppService {
       this.storage.getItem(this.storageTitle) ?? '',
     );
     // This should never be truthy as we are only going to store an array
-    return typeof storedValue === 'string' ? [] : storedValue;
+    return typeof storedValue === 'string' ? [] : storedValue.slice(0, 5);
   }
 
   private setCities() {

@@ -1,18 +1,18 @@
 <ng-container *ngIf="!!forecast">
   <div
-    class="w-80 sm:w-64 h-56 border-2 border-neutral-700 rounded bg-gradientPattern bg-default flex flex-col p-2 m-2"
+    class="w-80 sm:w-64 lg:w-44 h-56 lg:h-[12.5rem] border-2 border-neutral-700 rounded bg-gradientPattern bg-default flex flex-col p-2 m-2"
   >
-    <p class="font-medium text-xl basis-full">
-      {{ convertDate(forecast.date) | date: "fullDate" }}
+    <p class="font-medium text-xl basis-full whitespace-nowrap lg:text-sm lg:font-bold">
+      {{ convertDate(forecast.date) | date: "ccc MMMM dd, YYY" }}
     </p>
     <ng-container *ngFor="let weather of forecast.weather">
       <app-weather-icon [weatherDescription]="weather"></app-weather-icon>
     </ng-container>
-    <div class="flex flex-col justify-between">
-      <p>Sunrise: {{ convertDate(forecast.sunrise) | date: "shortTime" }}</p>
-      <p>Sunset: {{ convertDate(forecast.sunset) | date: "shortTime" }}</p>
-      <p>Temp: {{ forecast.temp.day }} degrees</p>
-      <p>Humidity: {{ forecast.humidity }}%</p>
+    <div class="flex flex-col justify-between lg:text-sm">
+      <p><span class="font-bold">Sunrise:</span> {{ convertDate(forecast.sunrise) | date: "shortTime" }}</p>
+      <p><span class="font-bold">Sunset:</span> {{ convertDate(forecast.sunset) | date: "shortTime" }}</p>
+      <p><span class="font-bold">Temp:</span> {{ forecast.temp.day }} degrees</p>
+      <p><span class="font-bold">Humidity:</span> {{ forecast.humidity }}%</p>
     </div>
   </div>
 </ng-container>

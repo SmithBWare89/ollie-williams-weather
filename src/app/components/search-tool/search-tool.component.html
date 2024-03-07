@@ -7,14 +7,14 @@
       <input
         type="text"
         id="city-input"
-        class="w-full lg:w-[300px] lg:ml-3 mr-1 p-2 rounded border-2 border-slate-400 shadow-md shadow-slate-400"
+        class="w-full lg:w-[300px] lg:ml-2 mr-1 p-2 rounded border-2 border-slate-400 shadow-md shadow-slate-400"
         formControlName="searchCity"
         [ngClass]="{ error: error$ | async }"
         [autofocus]="true"
         placeholder="Search for a city here!"
       />
     </form>
-    <button type="submit" class="p-0 w-12 lg:w-[50px] border-2 border-black rounded bg-gradientPattern bg-default mt-0.5" (click)="onSubmit()">
+    <button type="submit" class="p-0 w-12 lg:w-[90px] border-2 border-black rounded bg-gradientPattern bg-default mt-0.5" (click)="onSubmit()">
       <fa-icon [icon]="magnifyingGlass"></fa-icon>
     </button>
   </div>
