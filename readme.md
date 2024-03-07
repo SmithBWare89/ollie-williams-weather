@@ -1,4 +1,5 @@
-# <img src="./assets/images/ollie-williams.png" height="100" width="100" alt="Ollie Williams weather reporter from TV show Family Guy."> Ollie Williams Weather (https://smithbware89.github.io/ollie-williams-weather/)
+# <img src="./src/assets/ollie-williams.png" height="100" width="100" alt="Ollie Williams weather reporter from TV show Family Guy."> Ollie Williams Weather (https://ollie-williams-angular-2cb6f6d5653d.herokuapp.com/)
+
 
 ## Description
 **Update**: This project has been update to showcase skills that I've learned. I've updated this project to use AngularJs (v17), Tailwind CSS, RxJS, and an Express server to serve the final build of the application on Heroku. In order to protect the API key, I've developed a backend that's also deployed on Heroku as a proxy server for my requests to the OpenWeather API.
@@ -49,20 +50,7 @@ This particular project is an ode to one of my favorite Family Guy characters, O
 # Credits
 ## [Font Awesome](https://fontawesome.com/)
 
-## [Bootstrap 4](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
-
-## Animate On Scroll by michalsnik 
-- [Website](https://michalsnik.github.io/aos/)
-- [Github Repo](https://github.com/michalsnik/aos)
-
-## Stack Overflow user "Turnip" for providing shake animation - (https://stackoverflow.com/questions/30652207/shake-text-input-if-empty)
-
 ## [EPA UV Index Doc](https://19january2017snapshot.epa.gov/sunsafety/uv-index-scale-1_.html#:~:text=A%20UV%20Index%20reading%20of%208%20to%2010%20means%20very,damaged%20and%20can%20burn%20quickly.&text=and%204%20p.m.-,If%20outdoors%2C%20seek%20shade%20and%20wear%20protective%20clothing%2C%20a%20wide,%2C%20and%20UV%2Dblocking%20sunglasses)
-
-## Teachers Assistants & Fellow Learners
-- Alex Costan - TA
-- Christian Wood - TA
-- Joe Klein - Classmate
 
 
 
