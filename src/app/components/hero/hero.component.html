@@ -25,23 +25,32 @@
         </p>
         <p class="text-lg my-1">
           UV Index:
-          <span class="bg-low p-1 rounded">{{ currentForecast.uvi }}</span>
+          <span
+            class="p-1 rounded"
+            [ngClass]="{
+              'bg-low': currentForecast.uvi >= 0 && currentForecast.uvi <= 2.99,
+              'bg-moderate': currentForecast.uvi >= 3 && currentForecast.uvi <= 5.99,
+              'bg-high': currentForecast.uvi >= 6 && currentForecast.uvi <= 7.99,
+              'bg-veryHigh': currentForecast.uvi >= 8 && currentForecast.uvi <= 10.99,
+              'bg-extreme': currentForecast.uvi >= 11
+            }"
+            >{{ currentForecast.uvi }}</span
+          >
         </p>
       </div>
-      <div class="w-auto flex flex-col flex-nowrap justify-self-end">
-        <p class="text-lg my-1">
-          Cloud Cover: {{ currentForecast.cloudCover }}%
-        </p>
-        <p class="text-lg my-1">
-          Feels Like: {{ currentForecast.feelsLike }} F
-        </p>
-        <p class="text-lg my-1">
+      <div class="w-auto flex flex-col flex-nowrap gap-y-1 text-lg">
+        <p>Cloud Cover: {{ currentForecast.cloudCover }}%</p>
+        <p>Feels Like: {{ currentForecast.feelsLike }} F</p>
+        <p>
           Sunrise:
           {{ convertDate(currentForecast.sunrise) | date: "shortTime" }}
         </p>
-        <p class="text-lg my-1">
+        <p>
           Sunset: {{ convertDate(currentForecast.sunset) | date: "shortTime" }}
         </p>
+      </div>
+      <div class="w-auto flex flex-col flex-nowrap gap-y-1 text-lg">
+        <p>Dew Point: {{ currentForecast.dewPoint }}%</p>
       </div>
     </div>
   </div>
