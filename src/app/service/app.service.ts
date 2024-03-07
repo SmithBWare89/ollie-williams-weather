@@ -17,8 +17,7 @@ export class AppService {
   public async setCityForecast(
     city: string,
   ): Promise<ForecastType | undefined> {
-    // const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
-    const url: string = `http://localhost:3000/${city}`;
+    const url: string = `https://ollie-weather-backend-cd657e24fe9a.herokuapp.com/${city}`;
     return await lastValueFrom(
       this.http.get(url).pipe(
         map((data): undefined | ForecastType => {
