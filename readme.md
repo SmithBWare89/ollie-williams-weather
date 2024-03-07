@@ -1,9 +1,9 @@
 # <img src="./assets/images/ollie-williams.png" height="100" width="100" alt="Ollie Williams weather reporter from TV show Family Guy."> Ollie Williams Weather (https://smithbware89.github.io/ollie-williams-weather/)
 
 ## Description
-This particular project is an ode to one of my favorite Family Guy characters, Ollie Williams. If you weren't aware, Ollie Williams is a meteorologist on the fictional hit television show "Family Guy." He provides a quick bit of comic relief that always amused me so when this project came up in my boot camp there was only one name that came to mind - Ollie. I hope that you enjoy this app, it's functionality, and the useful bits of information that it provides for you. I'm still very new in my journey as a developer but I wanted this to be a great representation of not only my skills but my ability to utilize the resources around me. Enjoy!
+**Update**: This project has been update to showcase skills that I've learned. I've updated this project to use AngularJs (v17), Tailwind CSS, RxJS, and an Express server to serve the final build of the application on Heroku. In order to protect the API key, I've developed a backend that's also deployed on Heroku as a proxy server for my requests to the OpenWeather API.
 
-**Update** I've since refactored this project to use AngularJs, RxJs, and Tailwind CSS to create a similar experience. To add additional security to the API component of this project, I've created a backend that's hosted 
+This particular project is an ode to one of my favorite Family Guy characters, Ollie Williams. If you weren't aware, Ollie Williams is a meteorologist on the fictional hit television show "Family Guy." He provides a quick bit of comic relief that always amused me so when this project came up in my boot camp there was only one name that came to mind - Ollie. I hope that you enjoy this app, it's functionality, and the useful bits of information that it provides for you. I'm still very new in my journey as a developer but I wanted this to be a great representation of not only my skills but my ability to utilize the resources around me. Enjoy!
 
 ## Acceptance Criteria
 - GIVEN a weather dashboard with form inputs
@@ -19,11 +19,12 @@ This particular project is an ode to one of my favorite Family Guy characters, O
 - THEN I am again presented with current and future conditions for that city
 
 ## Methodologies
-<img src="./assets/images/HTML5.svg" height="200" width="200" alt="HTML 5 Logo">
-<img src="./assets/images/CSS.svg" height="200" width="200" alt="CSS Logo">
-<img src="./assets/images/Javascript.svg" height="200" width="200" alt="Javascript Logo">
-<img src="./assets/images/Bootstrap4.svg" height="200" width="200" alt="Bootstrap 4 Logo">
-<img src="./assets/images/StackOverflow.svg" height="200" width="200" alt="Stack Overflow Logo">
+<img src="./src/assets/HTML5.svg.png" height="175" width="200" alt="HTML 5 Logo">
+<img src="./src/assets/typescript.svg" height="160" width="200" alt="TypeScript">
+<img src="./src/assets/Javascript.svg" height="150" width="200" alt="Javascript Logo">
+<img src="./src/assets/heroku.svg" height="160" width="200" alt="Heroku Logo">
+<img src="./src/assets/tailwindcss.svg" height="150" width="300" alt="Tailwind CSS Logo"> 
+<img src="./src/assets/StackOverflow.svg" height="125" width="300" alt="Stack Overflow Logo">
 
 # Application Features
 ## Form Validation
