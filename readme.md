@@ -31,20 +31,20 @@ This particular project is an ode to one of my favorite Family Guy characters, O
 - Input only accepts characters that are uppercase or lowercase letters and white space
 - Upon inputting a character that isn't accepted the input area will animate and turn read briefly
 - Text input field will clear itself allowing for additional user input
-### <img src="./assets/images/InputValidation.gif" alt="Animated picture demonstrating how the form input will shake and turn red if the users input is invalid.">
+### <img src="./src/assets/InputValidation.gif" alt="Animated picture demonstrating how the form input will shake and turn red if the users input is invalid.">
 
 ## Data Population
 - Upon page load the application displays as empty awaiting user input
 - When searching for a city the data for the city shows along with its date and current data
 - The cities 5 day forecast is also displayed in smaller data boxes below the forecast
 - The recently searched city is also saved to a list that's clickable
-### <img src="./assets/images/DataPopulating.gif" alt="An animated photo showing how all screen data will fade in with an animation.">
+### <img src="./src/assets/DataPopulating.gif" alt="An animated photo showing how all screen data will fade in with an animation.">
 
 ## Data Persistence
 - Data persists in localStorage allowing the user to access their most recently visited cities upon page refresh. 
 - Data also doesn't duplicate when clicking on a recently searched city.
 - New cities are added to localStorage and the recently viewed lists
-### <img src="./assets/images/DataPersistence.gif" alt="An animation displaying user input data will persist on refresh and when inputting a new city.">
+### <img src="./src/assets/DataPersistence.gif" alt="An animation displaying user input data will persist on refresh and when inputting a new city.">
 
 # Credits
 ## [Font Awesome](https://fontawesome.com/)
