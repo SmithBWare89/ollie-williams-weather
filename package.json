@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "postinstall": "ng build --aot --configuration production"
+    "postinstall": "ng build --aot --configuration production --base-href /ollie-williams-weather/browser"
   },
   "private": true,
   "dependencies": {
