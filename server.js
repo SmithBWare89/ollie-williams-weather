@@ -9,7 +9,7 @@ app.use(express.static(__dirname + "/dist/ollie-williams-weather"));
 
 app.get("/*", function (req, res) {
   res.sendFile(
-    path.join(__dirname + "/dist/ollie-williams-weather/index.html"),
+    path.join(__dirname + "/dist/ollie-williams-weather/browser/index.html"),
   );
 });
 
