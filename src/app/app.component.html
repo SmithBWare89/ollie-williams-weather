@@ -6,7 +6,7 @@
         (loading)="setLoading($event)"
       ></app-results-container>
     </div>
-    <div class="flex-auto flex-col w-auto">
+    <div class="flex-auto flex-col w-full">
       <app-hero
         [currentForecast]="(currentWeather$ | async) ?? undefined"
         [loading]="(loading$ | async) ?? false"

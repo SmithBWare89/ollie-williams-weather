@@ -1,4 +1,4 @@
-<ng-container *ngIf="!!currentForecast">
+<ng-container *ngIf="currentForecast; else tomTucker">
   <div
     class="h-[400px] mr-4 font-medium p-2 mb-3 ml-4 bg-default bg-gradientPattern border-2 border-neutral-700 rounded flex flex-col flex-nowrap grow justify-around lg:mt-3.5"
     [ngClass]="{ 'swing-in-top-fwd': !loading }"
@@ -55,3 +55,8 @@
     </div>
   </div>
 </ng-container>
+<ng-template #tomTucker>
+  <div class="h-[400px] rounded w-[700px] lg:mt-3">
+    <img src="./assets/tom-tucker.jpg" alt="" class="w-full h-full">
+  </div>
+</ng-template>
