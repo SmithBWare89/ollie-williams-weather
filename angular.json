@@ -58,13 +58,12 @@
           "configurations": {
             "production": {
               "buildTarget": "ollie-williams-weather:build:production",
-              "browserTarget": "ollie-williams-weather:build:production"
             },
             "development": {
               "buildTarget": "ollie-williams-weather:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
